@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
@@ -17,6 +17,12 @@ import { PharmaciesComponent } from './pages/pharmacies/pharmacies.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { PatientComponent } from './pages/allPatient/patient.component';
 import { AddPatientComponent } from './pages/add-patient/add-patient.component';
+import { TempComponent } from './temp/temp.component';
+import { GovernorateServiceService } from './services/data/governorate-service.service';
+import { BasicAuthHttpInterceptorService } from './services/basic-auth-http-interceptor.service';
+import { AuthInterceptor } from './services/AuthInterceptor.service';
+import { PharmacyService } from './services/data/pharmacy.service';
+import { DoctorComponent } from './pages/doctor/doctor.component';
 
 
 registerLocaleData(en);
@@ -33,6 +39,8 @@ registerLocaleData(en);
     ErrorComponent,
     AddPatientComponent,
     PatientComponent,
+    TempComponent,
+    DoctorComponent,
 
   ],
 
@@ -49,7 +57,14 @@ registerLocaleData(en);
 
   ],
 
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, GovernorateServiceService,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi   : true,
+    },
+    PharmacyService
+  ],
   bootstrap: [AppComponent]
 })
 
