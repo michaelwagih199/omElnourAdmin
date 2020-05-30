@@ -1,0 +1,60 @@
+<nz-layout class="left-layout" *ngIf="isLoggedIn">
+  <nz-sider>
+    <div nz-row nzType="flex" nzJustify="center" nzAlign="middle" class="logo">
+      <div nz-col >
+        <a class="height-100" id="text" href="https://gentiumhealthcare.com/">Gentium Application</a>
+      </div>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+
+      <li nz-submenu nzTitle="Patients" nzIcon="user">
+        <ul>
+          <li nz-menu-item [routerLink]="'/patients'" >All Patients </li>
+          <li nz-menu-item>New Enrolment</li>
+        </ul>
+      </li>
+
+      <li nz-menu-item [routerLink]="'/doctors'">
+        <span>Doctors</span>
+      </li>
+      <li nz-menu-item  [routerLink]="'/pharmacies'" >
+        <span>Pharmacies</span>
+      </li>
+      <li nz-menu-item [routerLink]="'/voucher'">
+        <span>Vouchers</span>
+      </li>
+      <li nz-submenu nzTitle="Setting" nzIcon="setting">
+        <ul>
+          <li nz-menu-item [routerLink]="'/'" >Users </li>
+          <li nz-menu-item>Governorates</li>
+        </ul>
+      </li>
+
+      <li nz-menu-item [routerLink]="'/temp'" >
+        <span>About Application</span>
+      </li>
+
+    </ul>
+  </nz-sider>
+  <nz-layout class="right-layout">
+    <nz-header>
+      <div class="mr-3 float-right">
+        <nz-button-group>
+          <button nz-button>{{userName}}</button>
+          <button nz-button nz-dropdown [nzDropdownMenu]="menu2" nzPlacement="bottomRight">
+            <i nz-icon nzType="user"></i>
+          </button>
+        </nz-button-group>
+      </div>
+    </nz-header>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+    <!-- <nz-footer>Copyrights Reserved to GHC Gentium Healthcare 2020</nz-footer> -->
+  </nz-layout>
+</nz-layout>
+<nz-dropdown-menu #menu2="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item  (click)="log()" >log out</li>
+  </ul>
+</nz-dropdown-menu>

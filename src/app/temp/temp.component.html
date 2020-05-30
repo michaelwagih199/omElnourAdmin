@@ -1,0 +1,15 @@
+<table class="table table-bordered">
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>governorateName</th>
+
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let gover of governorates">
+          <td>{{gover.id}}</td>
+          <td>{{gover.governorateName}}</td>
+      </tr>
+  </tbody>
+</table>

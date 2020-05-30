@@ -1,0 +1,80 @@
+<nz-card nzType="inner" nzTitle="All Patients" [nzExtra]="extraTemplate">
+
+  <div class="row">
+    <div class="col-sm-10">
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" nz-input placeholder="input search text" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+      </ng-template>
+    </div>
+
+    <div class="col-sm-2">
+      <nz-button-group>
+        <button nz-button (click)="log()">Filter search</button>
+        <button nz-button nz-dropdown [nzDropdownMenu]="menu1" nzPlacement="bottomRight">
+          <i nz-icon nzType="ellipsis"></i>
+        </button>
+      </nz-button-group>
+    </div>
+
+  </div>
+
+  <br>
+  <nz-table #basicTable [nzData]="listOfData">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.age }}</td>
+        <td>{{ data.address }}</td>
+        <td>
+          <a>Action 一 {{ data.name }}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a>Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <div class="row">
+
+    <div class="col">
+      <button nz-button nzType="primary" (click)="showModal()">Add Patient</button>
+    </div>
+  </div>
+<!-- modal for add patient -->
+<nz-modal
+      [(nzVisible)]="isVisible"
+      nzTitle="Add New Patient"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()"
+      [nzOkLoading]="isOkLoading"
+    >
+
+    <app-add-patient></app-add-patient>
+
+    </nz-modal>
+</nz-card>
+
+
+
+<ng-template #extraTemplate>
+  <!-- <a>More</a> -->
+</ng-template>
+
+<nz-dropdown-menu #menu1="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item>Patient Code</li>
+    <li nz-menu-item>Patient Name</li>
+    <li nz-menu-item>Patient Phone</li>
+  </ul>
+</nz-dropdown-menu>

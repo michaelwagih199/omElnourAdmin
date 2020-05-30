@@ -1,0 +1,17 @@
+
+ .selcect{
+  width: 150px;
+}
+
+[nz-form] {
+  max-width: 800px;
+}
+
+.register-are {
+  margin-bottom: 8px;
+}
+
+.container {
+  overflow-x: auto;
+  white-space: nowrap;
+}

@@ -1,0 +1,33 @@
+
+<div class="container pt-4" *ngIf='invalidLogin'>
+  <nz-alert nzType="error" nzMessage="{{errorMessage}}" nzShowIcon></nz-alert>
+</div>
+
+<div id="outPopUp" nzType = "secondary" >
+  <nz-card style="width:300px;" nzTitle="Login" [nzExtra]="extraTemplate" >
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="userName" placeholder="Username" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Password!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="Password" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-card>
+  <ng-template #extraTemplate>
+  </ng-template>
+</div>
+

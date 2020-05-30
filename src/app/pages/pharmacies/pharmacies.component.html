@@ -1,0 +1,174 @@
+<nz-card nzType="inner" nzTitle="Pharmacies" [nzExtra]="extraTemplate">
+
+  <div class="row">
+
+    <div class="col-sm-2">
+      <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Governorate" [(ngModel)]="selectFilterSearchValue" (ngModelChange)="onChange($event)" >
+        <nz-option *ngFor="let item of governoratesList" nzValue="{{item.id}}"
+          nzLabel="{{item.governorateName}}"  >
+        </nz-option>
+      </nz-select>
+    </div>
+
+
+
+    <div class="col-sm-8">
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" nz-input placeholder="input search text" [(ngModel)]="searchValue" (ngModelChange)="onSearchChange($event)" [nzAutocomplete]="auto"/>
+      </nz-input-group>
+
+      <nz-autocomplete [nzDataSource]="filteredOptions" #auto></nz-autocomplete>
+
+      <ng-template #suffixIconButton>
+        <button (click)="search()" nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+      </ng-template>
+    </div>
+
+    <div class="col-sm-2">
+      <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Search Filters"
+        [(ngModel)]="selectFilterSearchValue" (ngModelChange)="onSearchFilterChange($event)" >
+        <nz-option nzLabel="pharmacyCode" nzValue="pharmacyCode"></nz-option>
+        <nz-option nzLabel="PharmacyName" nzValue="PharmacyName"></nz-option>
+      </nz-select>
+    </div>
+
+  </div>
+
+  <div class="container mt-3">
+
+    <nz-table #basicTable [nzData]="pharmacyList">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>PharmacyCode</th>
+          <th>Name</th>
+          <th>Phone1</th>
+          <th>Phone2</th>
+          <th>Phone3</th>
+          <th>email1</th>
+          <th>email2</th>
+          <th>email3</th>
+          <th>adress</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{data.id}}</td>
+          <td>{{data.pharmacyCode}}</td>
+          <td>{{data.name}}</td>
+          <td>{{data.phone1}}</td>
+          <td>{{data.phone2}}</td>
+          <td>{{data.phone3}}</td>
+          <td>{{data.email1}}</td>
+          <td>{{data.email2}}</td>
+          <td>{{data.email3}}</td>
+          <td>{{data.address}}</td>
+          <td>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a class="btn text-danger" (click)="onDelete(data.id,data.name)">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
+
+          <td>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a class="btn text-primary" (click)="onEdit(data.id)">
+              <i class="fas fa-user-edit"></i></a>
+          </td>
+
+        </tr>
+      </tbody>
+    </nz-table>
+
+  </div>
+
+</nz-card>
+
+<ng-template #extraTemplate>
+  <button nz-button nzType="primary" (click)="showModal()"><i nz-icon nzType="user-add"></i>Add Pharmacy</button>
+</ng-template>
+
+
+<!--add pharmacy -->
+
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()">
+
+  <ng-template #modalTitle>
+    Add new Pharmacy
+  </ng-template>
+
+  <ng-template #modalContent>
+
+    <form (ngSubmit)="onSubmit()" autocomplete="off">
+
+      <div class="form-group">
+        <label for="name">Pharmacy Code</label>
+        <input type="text" class="form-control" id="pharmacyCode" required [(ngModel)]="pharmacy.pharmacyCode"
+          name="pharmacyCode">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Phone1</label>
+        <input type="text" class="form-control" id="phone1" required [(ngModel)]="pharmacy.phone1" name="phone1">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Phone2</label>
+        <input type="text" class="form-control" id="phone2" required [(ngModel)]="pharmacy.phone2" name="phone2">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Phone3</label>
+        <input type="text" class="form-control" id="phone3" required [(ngModel)]="pharmacy.phone3" name="phone3">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Email1</label>
+        <input type="text" class="form-control" id="email1" required [(ngModel)]="pharmacy.email1" name="email1">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Email2</label>
+        <input type="text" class="form-control" id="email2" required [(ngModel)]="pharmacy.email2" name="email2">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Email3</label>
+        <input type="text" class="form-control" id="email3" required [(ngModel)]="pharmacy.email3" name="email3">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Address</label>
+        <input type="text" class="form-control" id="address" required [(ngModel)]="pharmacy.address" name="address">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Pharmacy Name</label>
+        <input type="text" class="form-control" id="name" required [(ngModel)]="pharmacy.name" name="name">
+      </div>
+
+      <div class="form-group">
+        <label for="governorateName">Pharmacy Governorate</label>
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Governorate" [(ngModel)]="selectedGovernorateValue"
+          name="governorateName">
+          <nz-option *ngFor="let item of governoratesList; let i = index" nzValue="{{item.governorateName}}"
+            nzLabel="{{item.governorateName}}"></nz-option>
+        </nz-select>
+      </div>
+      <br>
+
+      <button type="submit" class="btn btn-primary btn-block">{{saveButtonCheck}}</button>
+    </form>
+
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <p class="text-center text-info">{{message}}</p>
+  </ng-template>
+
+
+</nz-modal>
+
+
+<!-- end add pharmacy -->
