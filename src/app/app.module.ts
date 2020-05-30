@@ -23,6 +23,7 @@ import { BasicAuthHttpInterceptorService } from './services/basic-auth-http-inte
 import { AuthInterceptor } from './services/AuthInterceptor.service';
 import { PharmacyService } from './services/data/pharmacy.service';
 import { DoctorComponent } from './pages/doctor/doctor.component';
+import { VoucherComponent } from './pages/voucher/voucher.component';
 
 
 registerLocaleData(en);
@@ -41,6 +42,7 @@ registerLocaleData(en);
     PatientComponent,
     TempComponent,
     DoctorComponent,
+    VoucherComponent,
 
   ],
 

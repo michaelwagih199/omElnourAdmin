@@ -7,6 +7,7 @@ import { PharmaciesComponent } from './pages/pharmacies/pharmacies.component';
 import { PatientComponent } from './pages/allPatient/patient.component';
 import { TempComponent } from './temp/temp.component';
 import { DoctorComponent } from './pages/doctor/doctor.component';
+import { VoucherComponent } from './pages/voucher/voucher.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'patients', component: PatientComponent, canActivate:[AuthGaurdService]},
   { path: 'doctors', component: DoctorComponent, canActivate:[AuthGaurdService]},
   { path: 'temp', component: TempComponent, canActivate:[AuthGaurdService]},
+  { path: 'voucher', component: VoucherComponent, canActivate:[AuthGaurdService]},
 
 ];
 
