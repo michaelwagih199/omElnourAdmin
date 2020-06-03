@@ -24,6 +24,7 @@ import { AuthInterceptor } from './services/AuthInterceptor.service';
 import { PharmacyService } from './services/data/pharmacy.service';
 import { DoctorComponent } from './pages/doctor/doctor.component';
 import { VoucherComponent } from './pages/voucher/voucher.component';
+import { VoucherDetailsComponent } from './pages/voucher-details/voucher-details.component';
 
 
 registerLocaleData(en);
@@ -43,6 +44,7 @@ registerLocaleData(en);
     TempComponent,
     DoctorComponent,
     VoucherComponent,
+    VoucherDetailsComponent,
 
   ],
 

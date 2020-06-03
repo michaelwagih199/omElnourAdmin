@@ -6,7 +6,6 @@ export class VoucherOrder {
   doctorName:string
   governorateName:string
   status:string
-
 }
 
 

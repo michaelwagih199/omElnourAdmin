@@ -22,8 +22,8 @@ export class VoucherOrderServiceService {
    * custom create
    * @param doctor
    */
-  createObject(doctor: Object): Observable<Object>  {
-    return this.http.post( `${this.baseUrl}` , doctor);
+  createObject(goverId,doctorId,statuesId,doctor: Object): Observable<Object>  {
+    return this.http.post( `${this.baseUrl}/gId/${goverId}/docId/${doctorId}/vsId/${statuesId}` , doctor);
   }
 
   update(id, doctor: any): Observable <Object> {

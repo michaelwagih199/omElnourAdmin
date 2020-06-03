@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
     @Inject(DOCUMENT) private _document,
     private loginservice: AuthenticationService,
-    private router: Router, ) { }
+    private router: Router ) { }
 
   submitForm(): void {
     this.userName = this.validateForm.value.userName

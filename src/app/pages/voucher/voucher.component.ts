@@ -5,6 +5,10 @@ import { NzModalService, NzNotificationService } from 'ng-zorro-antd';
 import { VoucherOrderServiceService } from 'src/app/services/data/voucher-order-service.service';
 import { Doctor } from 'src/app/services/models/doctor';
 import { Governorate } from 'src/app/services/models/governorate';
+import { Router } from '@angular/router';
+import { DoctorServiceService } from 'src/app/services/data/doctor-service.service';
+import { GovernorateServiceService } from 'src/app/services/data/governorate-service.service';
+import { VoucherStatuesService } from 'src/app/services/data/voucher-statues.service';
 
 @Component({
   selector: 'app-voucher',
@@ -14,25 +18,32 @@ import { Governorate } from 'src/app/services/models/governorate';
 export class VoucherComponent implements OnInit {
   searchValue: string = null
   selectFilterSearchValue: string = null
+  statuesSelectValue:any = null
   isVisible = false;
   saveButtonCheck = 'Save'
   message = "Add vouchers order"
-  voucherOrde: VoucherOrder = new VoucherOrder()
-  voucherOrdeList: VoucherOrder[];
-  doctorList: Doctor[];
-  goverList: Governorate[];
-  filteredOptions: string[] = [];
-  options: string[];
+  voucherOrde: VoucherOrder = new VoucherOrder(null,null)
+  voucherOrdeList: VoucherOrder[]
+  doctorList: Doctor[]
+  goverList: Governorate[]
+  filteredOptions: string[] = []
+  statuesList: string[] = []
+  options: string[]
   dateFormat = 'dd/MM/yyy';
-  goverSelectValue?:string = null;
-  doctorSelectValue ?: string = null;
-
+  goverSelectValue?: any = null
+  doctorSelectValue?: any = null
 
   constructor(private fb: FormBuilder,
     private voucherService: VoucherOrderServiceService,
     private modal: NzModalService,
-    private notification: NzNotificationService) {
+    private doctorService: DoctorServiceService,
+    private governorateService: GovernorateServiceService,
+    private notification: NzNotificationService,
+    private voucherStatuesService:VoucherStatuesService,
+    private router: Router) {
+
     this.filteredOptions = this.options;
+
   }
 
   ngOnInit(): void {
@@ -57,16 +68,20 @@ export class VoucherComponent implements OnInit {
   }
 
   showModal() {
-    this.isVisible = true;
+    this.isVisible = true
+    this.retrieveDoctor()
+    this.retrieveGovernorate()
+    this.retrieveStatues()
 
   }
+
   handleCancel(): void {
-    this.isVisible = false;
+    this.isVisible = false
     this.voucherOrde = new VoucherOrder()
   }
 
   onSubmit() {
-    this.save();
+    this.save()
     this.voucherOrde = new VoucherOrder()
   }
 
@@ -110,17 +125,17 @@ export class VoucherComponent implements OnInit {
   onEdit(id) {
     this.findById(id)
     this.saveButtonCheck = 'Update'
-    this.isVisible = true;
+    this.isVisible = true
   }
 
-  onInfo(id){
-
+  onInfo(id) {
+    this.router.navigate(['/voucherDetails'])
   }
 
 
   save() {
     if (this.saveButtonCheck == 'Save') {
-      this.voucherService.createObject(this.voucherOrde)
+      this.voucherService.createObject(this.goverSelectValue,this.doctorSelectValue,this.statuesSelectValue,this.voucherOrde)
         .subscribe(data => {
           console.log(data)
           this.retrieveVoucherOrder()
@@ -159,6 +174,42 @@ export class VoucherComponent implements OnInit {
           console.log(error);
         });
   }
+
+  retrieveDoctor() {
+    this.doctorService.getAll()
+      .subscribe(
+        data => {
+          this.doctorList = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  retrieveStatues() {
+    this.voucherStatuesService.getAll()
+      .subscribe(
+        data => {
+          this.statuesList = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+
+  retrieveGovernorate() {
+    this.governorateService.getFlightsData()
+      .subscribe(
+        data => {
+          this.goverList = data;
+          //console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
 
 
   findById(id: number) {
@@ -229,7 +280,7 @@ export class VoucherComponent implements OnInit {
     );
   }
 
-  dateToday: number = Date.now();
+  dateToday: any = Date.now();
 
 
 

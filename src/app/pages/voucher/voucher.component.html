@@ -65,10 +65,9 @@
 
             <td>
               <nz-divider nzType="vertical"></nz-divider>
-              <a class="btn text-primary" (click)="onInfo(data.id)">
+              <a class="btn text-warning" (click)="onInfo(data.id)">
                 <i class="fas fa-info-circle"></i></a>
             </td>
-
 
           </tr>
         </tbody>
@@ -103,7 +102,7 @@
           <div class="col">
             <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Governorate"
               [(ngModel)]="goverSelectValue" name="Governorate">
-              <nz-option *ngFor="let item of goverList" nzValue="{{item.governorateName}}"
+              <nz-option *ngFor="let item of goverList" nzValue="{{item.id}}"
                 nzLabel="{{item.governorateName}}">
               </nz-option>
             </nz-select>
@@ -112,7 +111,7 @@
           <div class="col ">
             <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Doctors" [(ngModel)]="doctorSelectValue"
               name="doctorName">
-              <nz-option *ngFor="let item of doctorList" nzValue="{{item.doctorName}}" nzLabel="{{item.doctorName}}">
+              <nz-option *ngFor="let item of doctorList" nzValue="{{item.id}}" nzLabel="{{item.doctorName}}">
               </nz-option>
             </nz-select>
           </div>
@@ -131,8 +130,8 @@
             <div class="form-group">
               <label for="name">Vouchers Statues</label>
               <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Vouchers Statues"
-                [(ngModel)]="doctorSelectValue" name="status">
-                <nz-option *ngFor="let item of doctorList" nzValue="{{item.doctorName}}" nzLabel="{{item.doctorName}}">
+                [(ngModel)]="statuesSelectValue" name="status">
+                <nz-option *ngFor="let item of statuesList" nzValue="{{item.id}}" nzLabel="{{item.status}}">
                 </nz-option>
               </nz-select>
             </div>
