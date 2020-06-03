@@ -3,6 +3,8 @@ import { VoucherOrder } from 'src/app/services/models/VoucherOrder';
 import { FormBuilder } from '@angular/forms';
 import { NzModalService, NzNotificationService } from 'ng-zorro-antd';
 import { VoucherOrderServiceService } from 'src/app/services/data/voucher-order-service.service';
+import { Doctor } from 'src/app/services/models/doctor';
+import { Governorate } from 'src/app/services/models/governorate';
 
 @Component({
   selector: 'app-voucher',
@@ -17,9 +19,13 @@ export class VoucherComponent implements OnInit {
   message = "Add vouchers order"
   voucherOrde: VoucherOrder = new VoucherOrder()
   voucherOrdeList: VoucherOrder[];
+  doctorList: Doctor[];
+  goverList: Governorate[];
   filteredOptions: string[] = [];
   options: string[];
   dateFormat = 'dd/MM/yyy';
+  goverSelectValue?:string = null;
+  doctorSelectValue ?: string = null;
 
 
   constructor(private fb: FormBuilder,
@@ -105,6 +111,10 @@ export class VoucherComponent implements OnInit {
     this.findById(id)
     this.saveButtonCheck = 'Update'
     this.isVisible = true;
+  }
+
+  onInfo(id){
+
   }
 
 
