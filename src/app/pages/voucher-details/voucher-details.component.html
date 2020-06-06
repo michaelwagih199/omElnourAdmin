@@ -1,1 +1,37 @@
-<p>voucher-details works!</p>
+<div class="container">
+  <nz-card nzType="inner" nzTitle="Vouchers" [nzExtra]="extraTemplate">
+
+    <div class="container mt-3">
+
+      <nz-table #basicTable [nzData]="voucherDetsilsList">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>Order Date</th>
+            <th>Voucher Counter</th>
+            <th>Doctor Name</th>
+            <th>Governorate Name</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{data.id}}</td>
+            <td>{{data.orderDate|date: "dd/MM/yyy"}}</td>
+            <td>{{data.voucherCounter}}</td>
+            <td>{{data.doctorName}}</td>
+            <td>{{data.governorateName}}</td>
+            <td>{{data.status}}</td>
+
+          </tr>
+        </tbody>
+      </nz-table>
+
+    </div>
+
+  </nz-card>
+
+  <ng-template #extraTemplate>
+
+  </ng-template>
+</div>

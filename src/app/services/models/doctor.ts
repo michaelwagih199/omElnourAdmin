@@ -1,5 +1,5 @@
 export class Doctor {
-  id: Number
+  id: number
   doctorCode:string
   phone1:string
   phone2:string

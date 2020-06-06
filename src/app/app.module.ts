@@ -25,7 +25,7 @@ import { PharmacyService } from './services/data/pharmacy.service';
 import { DoctorComponent } from './pages/doctor/doctor.component';
 import { VoucherComponent } from './pages/voucher/voucher.component';
 import { VoucherDetailsComponent } from './pages/voucher-details/voucher-details.component';
-
+import {DatePipe} from '@angular/common';
 
 registerLocaleData(en);
 
@@ -67,7 +67,8 @@ registerLocaleData(en);
       useClass: AuthInterceptor,
       multi   : true,
     },
-    PharmacyService
+    PharmacyService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

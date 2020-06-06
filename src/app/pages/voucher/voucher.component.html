@@ -5,7 +5,7 @@
     <div class="row">
 
       <div class="col-2">
-        <nz-date-picker [nzFormat]="dateFormat"></nz-date-picker>
+        <nz-date-picker [nzFormat]="dateFormat" [(ngModel)]="dateFilter" (ngModelChange)="onDateChange($event)" ></nz-date-picker>
       </div>
 
       <div class="col-8">
@@ -45,7 +45,7 @@
         <tbody>
           <tr *ngFor="let data of basicTable.data">
             <td>{{data.id}}</td>
-            <td>{{data.orderDate}}</td>
+            <td>{{data.orderDate|date: "dd/MM/yyy"}}</td>
             <td>{{data.voucherCounter}}</td>
             <td>{{data.doctorName}}</td>
             <td>{{data.governorateName}}</td>
@@ -94,20 +94,38 @@
     <ng-template #modalContent>
 
       <form (ngSubmit)="onSubmit()" autocomplete="off">
-        <h6 class="text-center text-info">Date:{{ dateToday | date: "dd/MM/yyy" }}</h6>
+        <div class="row">
+          <div class="col">
+            <span>Select Order Date </span>
+          </div>
+          <div class="col">
+            <nz-date-picker [(ngModel)]="orderDate" name="orderDate" [nzFormat]="dateFormat">
+            </nz-date-picker>
+          </div>
+        </div>
+        <!-- <h6 class="text-center text-info">Date:{{ dateToday | date: "dd/MM/yyy" }}</h6> -->
         <nz-divider nzType="horizontal"></nz-divider>
 
-        <div class="row" align="center">
-
+        <div class="row">
+          <div class="col">
+            <span>Select Governorate </span>
+          </div>
           <div class="col">
             <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Governorate"
               [(ngModel)]="goverSelectValue" name="Governorate">
-              <nz-option *ngFor="let item of goverList" nzValue="{{item.id}}"
-                nzLabel="{{item.governorateName}}">
+              <nz-option *ngFor="let item of goverList" nzValue="{{item.id}}" nzLabel="{{item.governorateName}}">
               </nz-option>
             </nz-select>
           </div>
 
+
+        </div>
+        <!-- end row -->
+        <nz-divider nzType="horizontal"></nz-divider>
+        <div class="row">
+          <div class="col">
+            <span>Select Doctors </span>
+          </div>
           <div class="col ">
             <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Doctors" [(ngModel)]="doctorSelectValue"
               name="doctorName">
@@ -116,8 +134,9 @@
             </nz-select>
           </div>
         </div>
-        <!-- end row -->
+
         <nz-divider nzType="horizontal"></nz-divider>
+
         <div class="row" align="center">
           <div class="col">
             <div class="form-group">

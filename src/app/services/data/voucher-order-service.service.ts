@@ -38,8 +38,8 @@ export class VoucherOrderServiceService {
     return this.http.get(`${this.baseUrl}?title=${title}`);
   }
 
-  filterByCode (code:string):Observable<any> {
-    return this.http.get(`${this.baseUrl}/code/${code}`);
+  filterByDate (date:string):Observable<any> {
+    return this.http.get(`${this.baseUrl}/date/${date}`);
   }
 
   filterByName (name:string):Observable<any> {

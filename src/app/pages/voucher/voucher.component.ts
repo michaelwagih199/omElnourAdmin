@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { DoctorServiceService } from 'src/app/services/data/doctor-service.service';
 import { GovernorateServiceService } from 'src/app/services/data/governorate-service.service';
 import { VoucherStatuesService } from 'src/app/services/data/voucher-statues.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-voucher',
@@ -18,11 +19,12 @@ import { VoucherStatuesService } from 'src/app/services/data/voucher-statues.ser
 export class VoucherComponent implements OnInit {
   searchValue: string = null
   selectFilterSearchValue: string = null
-  statuesSelectValue:any = null
+  statuesSelectValue: any = null
   isVisible = false;
   saveButtonCheck = 'Save'
   message = "Add vouchers order"
-  voucherOrde: VoucherOrder = new VoucherOrder(null,null)
+  dateFilter = null
+  voucherOrde: VoucherOrder = new VoucherOrder()
   voucherOrdeList: VoucherOrder[]
   doctorList: Doctor[]
   goverList: Governorate[]
@@ -30,8 +32,10 @@ export class VoucherComponent implements OnInit {
   statuesList: string[] = []
   options: string[]
   dateFormat = 'dd/MM/yyy';
+  orderDate = null
   goverSelectValue?: any = null
   doctorSelectValue?: any = null
+  dateToday: any = Date.now();
 
   constructor(private fb: FormBuilder,
     private voucherService: VoucherOrderServiceService,
@@ -39,8 +43,10 @@ export class VoucherComponent implements OnInit {
     private doctorService: DoctorServiceService,
     private governorateService: GovernorateServiceService,
     private notification: NzNotificationService,
-    private voucherStatuesService:VoucherStatuesService,
-    private router: Router) {
+    private voucherStatuesService: VoucherStatuesService,
+    private router: Router,
+    private datePipe: DatePipe
+  ) {
 
     this.filteredOptions = this.options;
 
@@ -57,6 +63,18 @@ export class VoucherComponent implements OnInit {
     this.filteredOptions = this.options.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) !== -1);
   }
 
+  onDateChange(value: string): void {
+    //console.log(value);
+   const selectedDate:string = this.datePipe.transform(value,"dd/MM/yyy").toString()
+  if(value !=null)
+    this.filterByDate(selectedDate)
+  else
+  this.retrieveVoucherOrder()
+
+
+  }
+
+
   onSearchFilterChange(value: string) {
     if (value == 'DoctorCode') {
       this.getCodes()
@@ -68,6 +86,11 @@ export class VoucherComponent implements OnInit {
   }
 
   showModal() {
+    this.voucherOrde = new VoucherOrder()
+    this.doctorSelectValue = null
+    this.goverSelectValue = null
+    this.statuesSelectValue = null
+    this.orderDate = null
     this.isVisible = true
     this.retrieveDoctor()
     this.retrieveGovernorate()
@@ -87,22 +110,22 @@ export class VoucherComponent implements OnInit {
 
   search() {
 
-    if (this.selectFilterSearchValue == 'DoctorCode' && this.searchValue != null) {
-      this.filterByCodes(this.searchValue)
-    } else if (this.selectFilterSearchValue == null || this.searchValue == null) {
-      this.retrieveVoucherOrder()
-      this.createNotification('warning', 'warninb', 'Search filter not selected')
-    } else if (this.selectFilterSearchValue == 'DoctorName' && this.searchValue != null) {
-      this.filterByName(this.searchValue)
-    }
-    console.log(this.searchValue)
+    // if (this.selectFilterSearchValue == 'DoctorCode' && this.searchValue != null) {
+    //   this.filterByCodes(this.searchValue)
+    // } else if (this.selectFilterSearchValue == null || this.searchValue == null) {
+    //   this.retrieveVoucherOrder()
+    //   this.createNotification('warning', 'warninb', 'Search filter not selected')
+    // } else if (this.selectFilterSearchValue == 'DoctorName' && this.searchValue != null) {
+    //   this.filterByName(this.searchValue)
+    // }
+    // console.log(this.searchValue)
 
   }
 
   onDelete(id) {
     this.modal.confirm({
-      nzTitle: 'Are you sure delete this Pharmacy?',
-      nzContent: '<b style="color: red;">Pharmacy Name : ' + name + '</b>',
+      nzTitle: 'Are you sure delete this voucher order?',
+      nzContent: '<b style="color: red;">order id  : ' + id + '</b>',
       nzOkText: 'Yes',
       nzOkType: 'danger',
       nzOnOk: () => {
@@ -110,7 +133,7 @@ export class VoucherComponent implements OnInit {
         this.voucherService.delete(id).subscribe(
           response => {
             console.log(response)
-            this.createNotification('success', 'Success', 'Pharmacy Deleted succesfully')
+            this.createNotification('success', 'Success', 'Order Deleted succesfully')
             this.retrieveVoucherOrder()
           },
           error => {
@@ -129,13 +152,16 @@ export class VoucherComponent implements OnInit {
   }
 
   onInfo(id) {
-    this.router.navigate(['/voucherDetails'])
+    this.router.navigate([`/voucherDetails/${id}`])
   }
 
 
   save() {
+    const selectedDate:string = this.datePipe.transform(this.orderDate,"dd/MM/yyy").toString()
+    this.voucherOrde.orderDate = selectedDate
+    console.log(this.voucherOrde)
     if (this.saveButtonCheck == 'Save') {
-      this.voucherService.createObject(this.goverSelectValue,this.doctorSelectValue,this.statuesSelectValue,this.voucherOrde)
+      this.voucherService.createObject(this.goverSelectValue, this.doctorSelectValue, this.statuesSelectValue, this.voucherOrde)
         .subscribe(data => {
           console.log(data)
           this.retrieveVoucherOrder()
@@ -223,8 +249,8 @@ export class VoucherComponent implements OnInit {
 
   }
 
-  filterByCodes(code: string) {
-    this.voucherService.filterByCode(code)
+  filterByDate(code: string) {
+    this.voucherService.filterByDate(code)
       .subscribe(
         data => {
           this.voucherOrdeList = data;
@@ -280,7 +306,7 @@ export class VoucherComponent implements OnInit {
     );
   }
 
-  dateToday: any = Date.now();
+
 
 
 

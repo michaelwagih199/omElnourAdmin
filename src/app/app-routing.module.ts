@@ -21,7 +21,8 @@ const routes: Routes = [
   { path: 'doctors', component: DoctorComponent, canActivate:[AuthGaurdService]},
   { path: 'temp', component: TempComponent, canActivate:[AuthGaurdService]},
   { path: 'voucher', component: VoucherComponent, canActivate:[AuthGaurdService]},
-  { path: 'voucherDetails', component: VoucherDetailsComponent, canActivate:[AuthGaurdService]},
+  { path: 'voucherDetails/:id', component: VoucherDetailsComponent, canActivate:[AuthGaurdService]},
+
 ];
 
 @NgModule({
