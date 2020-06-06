@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VoucherOrderDetails } from 'src/app/services/models/voucherDetails';
+import { VoucherDetailsService } from 'src/app/services/data/voucher-details.service';
 
 @Component({
   selector: 'app-voucher-details',
@@ -15,6 +16,8 @@ export class VoucherDetailsComponent implements OnInit {
   voucherDetsilsList:VoucherOrderDetails[]
 
   constructor(private route: ActivatedRoute,
+    private voucherDetailsService:VoucherDetailsService,
+    private router: Router,
     ) { }
 
   ngOnInit(): void {
@@ -22,12 +25,27 @@ export class VoucherDetailsComponent implements OnInit {
       this.orderId = params['id']
       console.log(this.orderId)
     });
-    this.retriveOrderDetails()
+    this.retriveOrderDetails(this.orderId)
   }
 
-  retriveOrderDetails() {
-    throw new Error("Method not implemented.");
+  /**
+   * data
+   */
+
+  retriveOrderDetails(id) {
+    this.voucherDetailsService.getAll()
+    .subscribe(
+      data => {
+        this.voucherDetsilsList = data;
+      },
+      error => {
+        console.log(error);
+      });
+
   }
 
+  toVouchers(){
+    this.router.navigate([`/voucher`])
+  }
 
 }
