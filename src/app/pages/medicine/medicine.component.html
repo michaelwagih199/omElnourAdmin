@@ -1,0 +1,80 @@
+<div class="container">
+
+  <nz-card nzType="inner" nzTitle="Vouchers" [nzExtra]="extraTemplate">
+
+    <div class="row">
+
+
+      <div class="col-10">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" nz-input placeholder="input search text" [(ngModel)]="searchValue"
+            (ngModelChange)="onSearchChange($event)" [nzAutocomplete]="auto" />
+        </nz-input-group>
+        <nz-autocomplete [nzDataSource]="filteredOptions" #auto></nz-autocomplete>
+        <ng-template #suffixIconButton>
+          <button (click)="search()" nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+        </ng-template>
+      </div>
+
+      <div class="col-2">
+        <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Search Filters"
+          [(ngModel)]="selectFilterSearchValue" (ngModelChange)="onSearchFilterChange($event)">
+          <nz-option nzLabel="DoctorName" nzValue="DoctorName"></nz-option>
+        </nz-select>
+      </div>
+
+    </div>
+
+    <div class="container mt-3">
+
+      <nz-table #basicTable [nzData]="voucherOrdeList">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>Order Date</th>
+            <th>Voucher Counter</th>
+            <th>Doctor Name</th>
+            <th>Governorate Name</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{data.id}}</td>
+            <td>{{data.orderDate}}</td>
+            <td>{{data.voucherCounter}}</td>
+            <td>{{data.doctorName}}</td>
+            <td>{{data.governorateName}}</td>
+            <td>{{data.status}}</td>
+            <td>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a class="btn text-danger" (click)="onDelete(data.id)">
+                <i class="fa fa-trash"></i>
+              </a>
+            </td>
+
+            <td>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a class="btn text-primary" (click)="onEdit(data.id)">
+                <i class="fas fa-user-edit"></i></a>
+            </td>
+
+            <td>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a class="btn text-warning" (click)="onInfo(data.id)">
+                <i class="fas fa-info-circle"></i></a>
+            </td>
+
+          </tr>
+        </tbody>
+      </nz-table>
+
+    </div>
+
+  </nz-card>
+
+  <ng-template #extraTemplate>
+    <button nz-button nzType="primary" (click)="showModal()"><i nz-icon nzType="user-add"></i>Add Medicine</button>
+  </ng-template>
+
+</div>

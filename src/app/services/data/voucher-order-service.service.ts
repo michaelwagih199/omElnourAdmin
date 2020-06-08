@@ -42,16 +42,9 @@ export class VoucherOrderServiceService {
     return this.http.get(`${this.baseUrl}/date/${date}`);
   }
 
-  filterByName (name:string):Observable<any> {
-    return this.http.get(`${this.baseUrl}/name/${name}`);
+  filterByDoctorName (name:string):Observable<any> {
+    return this.http.get(`${this.baseUrl}/doctorName/${name}`);
   }
 
-  getCodes ():Observable<any> {
-    return this.http.get(`${this.baseUrl}/codes`);
-  }
-
-  getNames ():Observable<any> {
-    return this.http.get(`${this.baseUrl}/names`);
-  }
 
 }

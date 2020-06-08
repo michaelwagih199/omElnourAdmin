@@ -9,6 +9,7 @@ import { TempComponent } from './temp/temp.component';
 import { DoctorComponent } from './pages/doctor/doctor.component';
 import { VoucherComponent } from './pages/voucher/voucher.component';
 import { VoucherDetailsComponent } from './pages/voucher-details/voucher-details.component';
+import { MedicineComponent } from './pages/medicine/medicine.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'temp', component: TempComponent, canActivate:[AuthGaurdService]},
   { path: 'voucher', component: VoucherComponent, canActivate:[AuthGaurdService]},
   { path: 'voucherDetails/:id', component: VoucherDetailsComponent, canActivate:[AuthGaurdService]},
+  { path: 'medicine', component: MedicineComponent, canActivate:[AuthGaurdService]},
 
 ];
 

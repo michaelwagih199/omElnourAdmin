@@ -23,16 +23,16 @@ export class VoucherComponent implements OnInit {
   isVisible = false;
   saveButtonCheck = 'Save'
   message = "Add vouchers order"
-  dateFilter = null
+  dateFilter = ''
   voucherOrde: VoucherOrder = new VoucherOrder()
   voucherOrdeList: VoucherOrder[]
   doctorList: Doctor[]
   goverList: Governorate[]
   filteredOptions: string[] = []
   statuesList: string[] = []
-  options: string[]
-  dateFormat = 'dd/MM/yyy';
-  orderDate = null
+  options = [];
+  dateFormat = 'dd-MM-yyy';
+  SelectOrderDate = null
   goverSelectValue?: any = null
   doctorSelectValue?: any = null
   dateToday: any = Date.now();
@@ -45,7 +45,8 @@ export class VoucherComponent implements OnInit {
     private notification: NzNotificationService,
     private voucherStatuesService: VoucherStatuesService,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+
   ) {
 
     this.filteredOptions = this.options;
@@ -54,6 +55,7 @@ export class VoucherComponent implements OnInit {
 
   ngOnInit(): void {
     this.retrieveVoucherOrder()
+
   }
   /**
    * events -----
@@ -64,21 +66,18 @@ export class VoucherComponent implements OnInit {
   }
 
   onDateChange(value: string): void {
-    //console.log(value);
-   const selectedDate:string = this.datePipe.transform(value,"dd/MM/yyy").toString()
-  if(value !=null)
-    this.filterByDate(selectedDate)
-  else
-  this.retrieveVoucherOrder()
 
-
+    const selectedDate: any = this.datePipe.transform(value, "dd-MM-yyy")
+    console.log(selectedDate);
+    if (value != null)
+      this.filterByDate(selectedDate)
+    else
+      this.retrieveVoucherOrder()
   }
 
 
   onSearchFilterChange(value: string) {
-    if (value == 'DoctorCode') {
-      this.getCodes()
-    } else if (value == 'DoctorName') {
+    if (value == 'DoctorName') {
       this.getNames()
     } else
       this.retrieveVoucherOrder()
@@ -90,13 +89,13 @@ export class VoucherComponent implements OnInit {
     this.doctorSelectValue = null
     this.goverSelectValue = null
     this.statuesSelectValue = null
-    this.orderDate = null
+    this.SelectOrderDate = null
     this.isVisible = true
     this.retrieveDoctor()
     this.retrieveGovernorate()
     this.retrieveStatues()
-
   }
+
 
   handleCancel(): void {
     this.isVisible = false
@@ -109,16 +108,13 @@ export class VoucherComponent implements OnInit {
   }
 
   search() {
-
-    // if (this.selectFilterSearchValue == 'DoctorCode' && this.searchValue != null) {
-    //   this.filterByCodes(this.searchValue)
-    // } else if (this.selectFilterSearchValue == null || this.searchValue == null) {
-    //   this.retrieveVoucherOrder()
-    //   this.createNotification('warning', 'warninb', 'Search filter not selected')
-    // } else if (this.selectFilterSearchValue == 'DoctorName' && this.searchValue != null) {
-    //   this.filterByName(this.searchValue)
-    // }
-    // console.log(this.searchValue)
+    if (this.selectFilterSearchValue == 'DoctorName' && this.searchValue != null) {
+      this.filterByDoctorName(this.searchValue)
+    } else if (this.selectFilterSearchValue == null || this.searchValue == null) {
+      this.retrieveVoucherOrder()
+      this.createNotification('warning', 'warninb', 'Search filter not selected')
+    }
+    console.log(this.searchValue)
 
   }
 
@@ -146,6 +142,9 @@ export class VoucherComponent implements OnInit {
   }
 
   onEdit(id) {
+    this.retrieveDoctor()
+    this.retrieveGovernorate()
+    this.retrieveStatues()
     this.findById(id)
     this.saveButtonCheck = 'Update'
     this.isVisible = true
@@ -157,7 +156,7 @@ export class VoucherComponent implements OnInit {
 
 
   save() {
-    const selectedDate:string = this.datePipe.transform(this.orderDate,"dd/MM/yyy").toString()
+    const selectedDate: string = this.datePipe.transform(this.SelectOrderDate, "dd-MM-yyy").toString()
     this.voucherOrde.orderDate = selectedDate
     console.log(this.voucherOrde)
     if (this.saveButtonCheck == 'Save') {
@@ -195,6 +194,7 @@ export class VoucherComponent implements OnInit {
       .subscribe(
         data => {
           this.voucherOrdeList = data;
+
         },
         error => {
           console.log(error);
@@ -211,6 +211,18 @@ export class VoucherComponent implements OnInit {
           console.log(error);
         });
   }
+
+  getNames() {
+    this.doctorService.getNames()
+      .subscribe(
+        data => {
+          this.options = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
 
   retrieveStatues() {
     this.voucherStatuesService.getAll()
@@ -242,6 +254,11 @@ export class VoucherComponent implements OnInit {
     this.voucherService.getById(id).subscribe(
       response => {
         this.voucherOrde = response
+        console.log(response.doctor.doctorName)
+        // this.orderDate = this.voucherOrde.orderDate
+        // this.goverSelectValue = this.voucherOrde.governorateName
+        this.doctorSelectValue = response.doctor.doctorName
+
       },
       error => {
         console.log(error);
@@ -260,8 +277,8 @@ export class VoucherComponent implements OnInit {
         });
   }
 
-  filterByName(name: string) {
-    this.voucherService.filterByName(name)
+  filterByDoctorName(name: string) {
+    this.voucherService.filterByDoctorName(name)
       .subscribe(
         data => {
           this.voucherOrdeList = data;
@@ -271,28 +288,6 @@ export class VoucherComponent implements OnInit {
         });
   }
 
-
-  getCodes() {
-    this.voucherService.getCodes()
-      .subscribe(
-        data => {
-          this.options = data;
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  getNames() {
-    this.voucherService.getNames()
-      .subscribe(
-        data => {
-          this.options = data;
-        },
-        error => {
-          console.log(error);
-        });
-  }
 
 
   /**

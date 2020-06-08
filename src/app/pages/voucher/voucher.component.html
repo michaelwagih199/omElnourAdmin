@@ -22,7 +22,6 @@
       <div class="col-2">
         <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Search Filters"
           [(ngModel)]="selectFilterSearchValue" (ngModelChange)="onSearchFilterChange($event)">
-          <nz-option nzLabel="DoctorCode" nzValue="DoctorCode"></nz-option>
           <nz-option nzLabel="DoctorName" nzValue="DoctorName"></nz-option>
         </nz-select>
       </div>
@@ -45,7 +44,7 @@
         <tbody>
           <tr *ngFor="let data of basicTable.data">
             <td>{{data.id}}</td>
-            <td>{{data.orderDate|date: "dd/MM/yyy"}}</td>
+            <td>{{data.orderDate}}</td>
             <td>{{data.voucherCounter}}</td>
             <td>{{data.doctorName}}</td>
             <td>{{data.governorateName}}</td>
@@ -78,7 +77,7 @@
   </nz-card>
 
   <ng-template #extraTemplate>
-    <button nz-button nzType="primary" (click)="showModal()"><i nz-icon nzType="user-add"></i>Add Pharmacy</button>
+    <button nz-button nzType="primary" (click)="showModal()"><i nz-icon nzType="user-add"></i>Add Voucher</button>
   </ng-template>
 
 
@@ -99,7 +98,7 @@
             <span>Select Order Date </span>
           </div>
           <div class="col">
-            <nz-date-picker [(ngModel)]="orderDate" name="orderDate" [nzFormat]="dateFormat">
+            <nz-date-picker [(ngModel)]="SelectOrderDate" name="SelectOrderDate" [nzFormat]="dateFormat">
             </nz-date-picker>
           </div>
         </div>

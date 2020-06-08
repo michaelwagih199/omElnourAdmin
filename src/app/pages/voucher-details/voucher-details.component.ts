@@ -33,7 +33,7 @@ export class VoucherDetailsComponent implements OnInit {
    */
 
   retriveOrderDetails(id) {
-    this.voucherDetailsService.getAll()
+    this.voucherDetailsService.getById(id)
     .subscribe(
       data => {
         this.voucherDetsilsList = data;
