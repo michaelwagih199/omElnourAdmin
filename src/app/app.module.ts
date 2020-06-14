@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { NzListModule } from 'ng-zorro-antd/list';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
@@ -16,10 +16,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { PharmaciesComponent } from './pages/pharmacies/pharmacies.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { PatientComponent } from './pages/allPatient/patient.component';
-import { AddPatientComponent } from './pages/add-patient/add-patient.component';
-import { TempComponent } from './temp/temp.component';
 import { GovernorateServiceService } from './services/data/governorate-service.service';
-import { BasicAuthHttpInterceptorService } from './services/basic-auth-http-interceptor.service';
 import { AuthInterceptor } from './services/AuthInterceptor.service';
 import { PharmacyService } from './services/data/pharmacy.service';
 import { DoctorComponent } from './pages/doctor/doctor.component';
@@ -27,6 +24,7 @@ import { VoucherComponent } from './pages/voucher/voucher.component';
 import { VoucherDetailsComponent } from './pages/voucher-details/voucher-details.component';
 import {DatePipe} from '@angular/common';
 import { MedicineComponent } from './pages/medicine/medicine.component';
+import { PatientDetailsComponent } from './pages/patient-details/patient-details.component';
 
 registerLocaleData(en);
 
@@ -40,13 +38,12 @@ registerLocaleData(en);
     MenueComponent,
     PharmaciesComponent,
     ErrorComponent,
-    AddPatientComponent,
     PatientComponent,
-    TempComponent,
     DoctorComponent,
     VoucherComponent,
     VoucherDetailsComponent,
     MedicineComponent,
+    PatientDetailsComponent,
 
   ],
 
@@ -60,6 +57,7 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     NzFormModule,
     ReactiveFormsModule,
+    NzListModule
 
   ],
 

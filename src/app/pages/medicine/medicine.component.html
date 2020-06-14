@@ -27,25 +27,23 @@
 
     <div class="container mt-3">
 
-      <nz-table #basicTable [nzData]="voucherOrdeList">
+      <nz-table #basicTable [nzData]="medicinList">
         <thead>
           <tr>
             <th>id</th>
-            <th>Order Date</th>
-            <th>Voucher Counter</th>
-            <th>Doctor Name</th>
-            <th>Governorate Name</th>
-            <th>Status</th>
+            <th>Medicine Name</th>
+            <th>Cycle Duration By month</th>
+            <th>Cycle Times</th>
+            <th>supportType</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of basicTable.data">
             <td>{{data.id}}</td>
-            <td>{{data.orderDate}}</td>
-            <td>{{data.voucherCounter}}</td>
-            <td>{{data.doctorName}}</td>
-            <td>{{data.governorateName}}</td>
-            <td>{{data.status}}</td>
+            <td>{{data.medicineName}}</td>
+            <td>{{data.medicineCycle.duration}}</td>
+            <td>{{data.medicineCycle.allNumber}}</td>
+            <td>{{data.medicineCycle.medicineSupport.supportType}}</td>
             <td>
               <nz-divider nzType="vertical"></nz-divider>
               <a class="btn text-danger" (click)="onDelete(data.id)">
@@ -59,11 +57,6 @@
                 <i class="fas fa-user-edit"></i></a>
             </td>
 
-            <td>
-              <nz-divider nzType="vertical"></nz-divider>
-              <a class="btn text-warning" (click)="onInfo(data.id)">
-                <i class="fas fa-info-circle"></i></a>
-            </td>
 
           </tr>
         </tbody>

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { NzModalService, NzNotificationService } from 'ng-zorro-antd';
+import { Patient } from 'src/app/services/models/Patient';
+import { PatientService } from 'src/app/services/data/patient.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient',
@@ -7,85 +12,110 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PatientComponent implements OnInit {
 
+  searchValue: string = null
+  selectFilterSearchValue: string = null
   isVisible = false;
-  isOkLoading = false;
+  saveButtonCheck = 'Save'
+  message = "Add Patient"
+  patient: Patient = new Patient()
+  patientList: Patient[];
+  filteredOptions: string[] = [];
 
-  listOfData = [
-
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    },
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    },
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    },
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-
-  ];
-  index1 = 0;
-  index2 = 0;
-
-  log(): void {
-    console.log('click dropdown button');
+  constructor(private fb: FormBuilder,
+    private patientService: PatientService,
+    private modal: NzModalService,
+    private notification: NzNotificationService,
+    private router: Router
+    ) {
+    this.filteredOptions = this.options;
   }
-  constructor() { }
+
   ngOnInit(): void {
+
+    this.retrievePatient()
+
   }
+
+  /**
+  * events -----
+  */
+
+  options = [];
+  onSearchChange(value: string): void {
+    this.filteredOptions = this.options.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
 
   showModal(): void {
     this.isVisible = true;
   }
 
-  handleOk(): void {
-    this.isOkLoading = true;
-    setTimeout(() => {
-      this.isVisible = false;
-      this.isOkLoading = false;
-    }, 3000);
+  search() {
+
   }
 
-  handleCancel(): void {
-    this.isVisible = false;
+  onSearchFilterChange(value: string) {
+
   }
+
+  onDelete(id) {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this voucher order?',
+      nzContent: '<b style="color: red;">order id  : ' + id + '</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'danger',
+      nzOnOk: () => {
+        console.log('OK')
+        this.patientService.delete(id).subscribe(
+          response => {
+            console.log(response)
+            this.createNotification('success', 'Success', 'Order Deleted succesfully')
+            this.retrievePatient()
+          },
+          error => {
+            console.log(error);
+          });
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+
+  onEdit(id) {
+
+  }
+
+  onInfo(id) {
+    this.router.navigate([`/PatientDetails/${id}`])
+  }
+
+
+  /**
+   * datat
+  */
+  retrievePatient() {
+    this.patientService.getAll()
+      .subscribe(
+        data => {
+          this.patientList = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+
+  /**
+  * helper UIUX
+  */
+  createNotification(type: string, title: string, description): void {
+    this.notification.create(
+      type,
+      title,
+      description
+    );
+  }
+
+
 
 }

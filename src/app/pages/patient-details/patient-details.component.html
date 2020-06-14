@@ -1,0 +1,279 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <nz-card nzTitle="Pesonal Patient info" [nzExtra]="extraTemplate">
+        <!--row1-->
+
+        <nz-list nzSize="small">
+          <nz-list-item *ngFor="let item of patientList">
+            <div class="container anyClass">
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">Patient Id :</h6>
+                </div>
+                <div class="col8">
+                  <h6 class="text-success font-weight-bold">{{item.id}}</h6>
+                </div>
+              </div>
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient Code :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.patientCode}}</p>
+                </div>
+              </div>
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient age :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.age}}</p>
+                </div>
+              </div>
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient dateOfBirth :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.dateOfBirth}}</p>
+                </div>
+              </div>
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient gender :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.gender}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient home :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.home}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient phone1 :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.phone}}</p>
+                </div>
+              </div>
+
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient phone2 :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.phone2}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient phone3 :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.phone3}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient email1 :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.email1}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient email2 :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.email2}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient createdDate :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.createdDate}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient patientName :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.patientName}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient patientInitial :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.patientInitial}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient idno :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.idno}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient address :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.address}}</p>
+                </div>
+              </div>
+
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient diagnosis :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.diagnosis}}</p>
+                </div>
+              </div>
+
+              <nz-divider nzType="horizontal"></nz-divider>
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient region :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{item.region}}</p>
+                </div>
+              </div>
+
+            </div>
+            <!--end container-->
+          </nz-list-item>
+        </nz-list>
+
+      </nz-card>
+      <ng-template #extraTemplate>
+        <!-- <a>More</a> -->
+      </ng-template>
+    </div>
+
+    <div class="col">
+      <nz-card nzTitle="Patient Vouchers" [nzExtra]="extraTemplate">
+        <nz-list nzSize="small">
+          <nz-list-item *ngFor="let v of voucherDetailsList">
+            <div class="container vouchersClass">
+              <div class="row">
+                <div class="col4">
+                  <h6 class="text-info mr-4">patient vouchers :</h6>
+                </div>
+                <div class="col8">
+                  <p class="text-success font-weight-bold">{{v.voucherCode}}</p>
+                </div>
+              </div>
+              <nz-divider nzType="horizontal"></nz-divider>
+            </div>
+          </nz-list-item>
+        </nz-list>
+      </nz-card>
+      <ng-template #extraTemplate>
+        <!-- <a>More</a> -->
+      </ng-template>
+
+      <div class="mt-2">
+        <nz-card nzTitle="Diagnosis Details" [nzExtra]="extraTemplate">
+          <nz-list nzSize="small">
+            <nz-list-item *ngFor="let item of patientList">
+              <div class="container vouchersClass">
+                <div class="row">
+                  <div class="col4">
+                    <h6 class="text-info mr-4">Patient Project :</h6>
+                  </div>
+                  <div class="col8">
+                    <p class="text-success font-weight-bold">{{item.projects[0].projectName}}</p>
+                  </div>
+                </div>
+                <nz-divider nzType="horizontal"></nz-divider>
+
+                <div class="row">
+                  <div class="col4">
+                    <h6 class="text-info mr-4">Patient Doctor :</h6>
+                  </div>
+                  <div class="col8">
+                    <p class="text-success font-weight-bold">{{item.doctor.doctorName}}</p>
+                  </div>
+                </div>
+                <nz-divider nzType="horizontal"></nz-divider>
+                <div class="row">
+                  <div class="col4">
+                    <h6 class="text-info mr-4">Patient Statues :</h6>
+                  </div>
+                  <div class="col8">
+                    <p class="text-success font-weight-bold">{{item.patientStatues.patientStatues}}</p>
+                  </div>
+                </div>
+                <nz-divider nzType="horizontal"></nz-divider>
+              </div>
+            </nz-list-item>
+          </nz-list>
+        </nz-card>
+        <ng-template #extraTemplate>
+          <!-- <a>More</a> -->
+        </ng-template>
+
+        <div class="row bg-dark mt-3 rounded-sm p-2">
+
+          <div class="col">
+            <button nz-button nzType="primary" nzShape="round"> Activation Message</button>
+          </div>
+
+          <div class="col">
+            <button nz-button nzType="primary" nzShape="round">Warning Message</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!--end row-->
+</div>
