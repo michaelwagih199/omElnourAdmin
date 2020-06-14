@@ -13,9 +13,9 @@ export class PatientDetailsComponent implements OnInit {
   private routeSub: Subscription;
   patient: Patient = new Patient()
   patientList: Patient[] = [];
-  voucherDetailsList:VoucherDetail[]=[];
+  voucherDetailsList: VoucherDetail[] = [];
 
-  patientId:number
+  patientId: number
 
 
   constructor(
@@ -46,12 +46,19 @@ export class PatientDetailsComponent implements OnInit {
 
   }
 
-  getPatientId(){
+  getPatientId() {
     this.routeSub = this.route.params.subscribe(params => {
       this.patientId = params['id']
     });
     this.findPatientById(this.patientId)
   }
 
+  /**
+   * events
+   */
+
+  back() {
+    this.router.navigate([`/patients`])
+  }
 
 }

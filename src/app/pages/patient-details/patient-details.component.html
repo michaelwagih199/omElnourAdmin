@@ -191,12 +191,12 @@
 
       </nz-card>
       <ng-template #extraTemplate>
-        <!-- <a>More</a> -->
+        <button nz-button nzType="link" (click)="back()"><i nz-icon nzType="backward"></i>Back</button>
       </ng-template>
     </div>
 
     <div class="col">
-      <nz-card nzTitle="Patient Vouchers" [nzExtra]="extraTemplate">
+      <nz-card nzTitle="Patient Vouchers" >
         <nz-list nzSize="small">
           <nz-list-item *ngFor="let v of voucherDetailsList">
             <div class="container vouchersClass">
@@ -213,12 +213,10 @@
           </nz-list-item>
         </nz-list>
       </nz-card>
-      <ng-template #extraTemplate>
-        <!-- <a>More</a> -->
-      </ng-template>
+
 
       <div class="mt-2">
-        <nz-card nzTitle="Diagnosis Details" [nzExtra]="extraTemplate">
+        <nz-card nzTitle="Diagnosis Details" >
           <nz-list nzSize="small">
             <nz-list-item *ngFor="let item of patientList">
               <div class="container vouchersClass">
@@ -254,9 +252,6 @@
             </nz-list-item>
           </nz-list>
         </nz-card>
-        <ng-template #extraTemplate>
-          <!-- <a>More</a> -->
-        </ng-template>
 
         <div class="row bg-dark mt-3 rounded-sm p-2">
 
