@@ -94,42 +94,159 @@
       <form (ngSubmit)="onSubmit()" autocomplete="off">
 
         <div class="form-group">
-          <label for="name">Doctor Code</label>
-          <input type="text" class="form-control" id="doctorCode" required [(ngModel)]="doctor.doctorCode"
-            name="doctorCode">
+          <label for="name">Patient Code</label>
+          <input type="text" class="form-control" id="patientCode" required [(ngModel)]="patient.patientCode"
+            name="patientCode">
         </div>
 
         <div class="form-group">
-          <label for="name">Phone1</label>
-          <input type="text" class="form-control" id="phone1" required [(ngModel)]="doctor.phone1" name="phone1">
+          <label for="name">Age</label>
+          <input type="text" class="form-control" id="phone1" required [(ngModel)]="patient.age" name="age">
         </div>
 
         <div class="form-group">
-          <label for="name">Phone2</label>
-          <input type="text" class="form-control" id="phone2" required [(ngModel)]="doctor.phone2" name="phone2">
+          <label for="name">home</label>
+          <input type="text" class="form-control" id="home" required [(ngModel)]="patient.home" name="home">
+        </div>
+
+
+        <div class="form-group">
+          <label for="name">phone 1</label>
+          <input type="text" class="form-control" id="phone" required [(ngModel)]="patient.phone" name="phone">
+        </div>
+
+        <div class="form-group">
+          <label for="name">phone 2</label>
+          <input type="text" class="form-control" id="phone2" required [(ngModel)]="patient.phone2" name="phone2">
+        </div>
+
+        <div class="form-group">
+          <label for="name">phone 3</label>
+          <input type="text" class="form-control" id="phone3" required [(ngModel)]="patient.phone3" name="phone3">
         </div>
 
 
         <div class="form-group">
           <label for="name">Email1</label>
-          <input type="text" class="form-control" id="email1" required [(ngModel)]="doctor.email1" name="email1">
-        </div>
-
-
-        <div class="form-group">
-          <label for="name">Address</label>
-          <input type="text" class="form-control" id="doctorAddress" required [(ngModel)]="doctor.doctorAddress"
-            name="doctorAddress">
+          <input type="text" class="form-control" id="email1" required [(ngModel)]="patient.email1" name="email1">
         </div>
 
         <div class="form-group">
-          <label for="name">Doctor Name</label>
-          <input type="text" class="form-control" id="doctorName" required [(ngModel)]="doctor.doctorName"
-            name="doctorName">
+          <label for="name">Email2</label>
+          <input type="text" class="form-control" id="email2" required [(ngModel)]="patient.email2" name="email2">
+        </div>
+
+        <div class="form-group">
+          <label for="name">Patient Name</label>
+          <input type="text" class="form-control" id="patientName" required [(ngModel)]="patient.patientName"
+            name="patientName">
+        </div>
+
+        <div class="form-group">
+          <label for="name">Patient Initial</label>
+          <input type="text" class="form-control" id="patientInitial" required [(ngModel)]="patient.patientInitial"
+            name="patientInitial">
+        </div>
+
+        <div class="form-group">
+          <label for="name">Patient IDNO</label>
+          <input type="text" class="form-control" id="idno" required [(ngModel)]="patient.idno" name="idno">
+        </div>
+
+        <div class="form-group">
+          <label for="name">Patient address</label>
+          <input type="text" class="form-control" id="address" required [(ngModel)]="patient.address" name="address">
+        </div>
+
+        <div class="form-group">
+          <label for="name">Patient diagnosis</label>
+          <input type="text" class="form-control" id="diagnosis" required [(ngModel)]="patient.diagnosis"
+            name="diagnosis">
+        </div>
+
+        <div class="form-group">
+          <label for="name">Patient region</label>
+          <input type="text" class="form-control" id="region" required [(ngModel)]="patient.region" name="region">
+        </div>
+
+        <div class="row mt-1">
+          <div class="col">
+            <span>Select Doctors </span>
+          </div>
+          <div class="col ">
+            <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Doctors" [(ngModel)]="doctorSelectValue"
+              name="doctorName">
+              <nz-option *ngFor="let item of doctorList" nzValue="{{item.id}}" nzLabel="{{item.doctorName}}">
+              </nz-option>
+            </nz-select>
+          </div>
+        </div>
+
+        <div class="row  mt-1">
+          <div class="col">
+            <span>Select Project </span>
+          </div>
+          <div class="col ">
+            <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Project"
+              [(ngModel)]="projectSelectValue" name="projectName">
+              <nz-option *ngFor="let item of projectList" nzValue="{{item.id}}" nzLabel="{{item.projectName}}">
+              </nz-option>
+            </nz-select>
+          </div>
+        </div>
+
+        <div class="row  mt-1">
+          <div class="col">
+            <span>Select Vouchers </span>
+          </div>
+          <div class="col ">
+            <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Vouchers"
+              [(ngModel)]="vouchersSelectValue" name="voucherCode">
+              <nz-option *ngFor="let item of voucherDetailsList" nzValue="{{item.id}}" nzLabel="{{item.voucherCode}}">
+              </nz-option>
+            </nz-select>
+          </div>
         </div>
 
 
-        <button type="submit" class="btn btn-primary btn-block">{{saveButtonCheck}}</button>
+        <div class="row  mt-1">
+          <div class="col">
+            <span>Select Statues </span>
+          </div>
+          <div class="col ">
+            <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Statues"
+              [(ngModel)]="statuesSelectValue" name="projectName">
+              <nz-option *ngFor="let item of patientStatuesList" nzValue="{{item.id}}"
+                nzLabel="{{item.patientStatues}}">
+              </nz-option>
+            </nz-select>
+          </div>
+        </div>
+
+        <div class="row  mt-1">
+          <div class="col">
+            <span>Select Gender </span>
+          </div>
+          <div class="col ">
+            <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Gender"
+              [(ngModel)]="patient.gender" name="gender">
+              <nz-option nzLabel="Male" nzValue="Male"></nz-option>
+              <nz-option nzLabel="female" nzValue="female"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+
+        <div class="row  mt-1">
+          <div class="col">
+            <span>Select DateOfBirth </span>
+          </div>
+          <div class="col ">
+            <nz-date-picker [(ngModel)]="slectBirthDate" name="slectBirthDate" [nzFormat]="dateFormat">
+            </nz-date-picker>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mt-4">{{saveButtonCheck}}</button>
       </form>
 
     </ng-template>

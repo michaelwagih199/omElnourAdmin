@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Patient } from '../models/Patient';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +8,27 @@ import { Patient } from '../models/Patient';
 export class PatientService {
 
   private baseUrl = 'http://localhost:8080/patients'
+  private projectUrl = 'http://localhost:8080/projects'
+  private statuesUrl = 'http://localhost:8080/patientStatues'
+  private voucherDetails = 'http://localhost:8080/voucherDetails'
+
 
   constructor(private http: HttpClient) { }
 
-  createPatient(patient: Object, goverId: number): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/${goverId}`, patient);
+  /**
+   *  @PostMapping("pId/{projectId}/docId/{doctorId}/vId/{voucherId}/pS/{patientStatuesId}")
+   * @param patient
+   * @param projectId
+   * @param doctorId
+   * @param voucherId
+   * @param patientStatuesId
+   */
+  createPatient(patient: Object,
+     projectId: number,
+     doctorId: number,
+     voucherId:number,
+     patientStatuesId:number): Observable<Object> {
+    return this.http.post(`${this.baseUrl}/pId/${projectId}/docId/${doctorId}/vId/${voucherId}/pS/${patientStatuesId}`, patient);
   }
 
   getAll(): Observable<any> {
@@ -30,6 +45,18 @@ export class PatientService {
 
   delete(id): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  getProjects(): Observable<any> {
+    return this.http.get(`${this.projectUrl}`);
+  }
+
+  getStatues(): Observable<any> {
+    return this.http.get(`${this.statuesUrl}`);
+  }
+
+  getVouchers(): Observable<any> {
+    return this.http.get(`${this.voucherDetails}`);
   }
 
 }

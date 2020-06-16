@@ -31,7 +31,7 @@ export class VoucherComponent implements OnInit {
   filteredOptions: string[] = []
   statuesList: string[] = []
   options = [];
-  dateFormat = 'dd-MM-yyy';
+  dateFormat = 'yyyy-MM-dd"';
   SelectOrderDate = null
   goverSelectValue?: any = null
   doctorSelectValue?: any = null
