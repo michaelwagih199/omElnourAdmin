@@ -7,3 +7,18 @@
   height:100px;
   overflow-y: scroll;
 }
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.infoDive{
+  background-color: #D5EEFF;
+}
+
+.border-3 {
+  border-width:3px !important;
+}

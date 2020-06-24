@@ -59,4 +59,26 @@ export class PatientService {
     return this.http.get(`${this.voucherDetails}`);
   }
 
+
+  filterByPatientCode (code:string):Observable<any> {
+    return this.http.get(`${this.baseUrl}/code/${code}`);
+  }
+
+  getNewEnrolMentPationt (code:string):Observable<any> {
+    return this.http.get(`${this.baseUrl}/newEnrolment/${code}`);
+  }
+
+
+  filterByPatientName (name:string):Observable<any> {
+    return this.http.get(`${this.baseUrl}/name/${name}`);
+  }
+
+  getCodes ():Observable<any> {
+    return this.http.get(`${this.baseUrl}/codes`);
+  }
+
+  getNames ():Observable<any> {
+    return this.http.get(`${this.baseUrl}/names`);
+  }
+
 }

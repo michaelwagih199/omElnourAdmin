@@ -14,6 +14,8 @@ export class PatientDetailsComponent implements OnInit {
   patient: Patient = new Patient()
   patientList: Patient[] = [];
   voucherDetailsList: VoucherDetail[] = [];
+  index1 = 0;
+  index2 = 0;
 
   patientId: number
 

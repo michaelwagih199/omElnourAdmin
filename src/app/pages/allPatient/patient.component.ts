@@ -30,9 +30,10 @@ export class PatientComponent implements OnInit {
   voucherDetailsList: VoucherDetail[]
   dateFormat = 'dd-MM-yyy';
   slectBirthDate = null
+  public href: string = "";
 
   doctorSelectValue?: any = null
-  projectSelectValue?: any = null
+  projectSelectValue?: any = "Select Project"
 
   constructor(private fb: FormBuilder,
     private patientService: PatientService,
@@ -47,12 +48,19 @@ export class PatientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.retrievePatient()
+    this.href = this.router.url;
+    if (this.href == '/patients')
+      this.retrievePatient()
+    else
+      this.retrieveNewEnrolmentPatient()
     this.retrieveDoctor()
     this.getProjects()
     this.getStatues()
     this.getVouchers()
+
+
   }
+
 
   /**
   * events -----
@@ -81,12 +89,28 @@ export class PatientComponent implements OnInit {
 
 
   search() {
+    if (this.selectFilterSearchValue == 'PatientCode' && this.searchValue != null) {
+      this.filterByCodes(this.searchValue)
+    } else if (this.selectFilterSearchValue == null || this.searchValue == null) {
+      this.retrievePatient()
+      this.createNotification('warning', 'warninb', 'Search filter not selected')
+    } else if (this.selectFilterSearchValue == 'PatientName' && this.searchValue != null) {
+      this.filterByName(this.searchValue)
+    }
+    console.log(this.searchValue)
 
   }
 
   onSearchFilterChange(value: string) {
-
+    if (value == 'PatientCode') {
+      this.getCodes()
+    } else if (value == 'PatientName') {
+      this.getNames()
+    } else
+      this.retrievePatient()
+    console.log(value)
   }
+
 
   onDelete(id) {
     this.modal.confirm({
@@ -112,7 +136,13 @@ export class PatientComponent implements OnInit {
   }
 
   onEdit(id) {
-
+    this.retrieveDoctor()
+    this.getProjects()
+    this.getStatues()
+    this.getVouchers()
+    this.findById(id)
+    this.saveButtonCheck = 'Update'
+    this.isVisible = true
   }
 
   onInfo(id) {
@@ -124,7 +154,7 @@ export class PatientComponent implements OnInit {
     this.patient.dateOfBirth = selectedDate
     if (this.saveButtonCheck == 'Save') {
       console.log(this.patient)
-      this.patientService.createPatient(this.patient,this.projectSelectValue, this.doctorSelectValue, this.vouchersSelectValue, this.statuesSelectValue)
+      this.patientService.createPatient(this.patient, this.projectSelectValue, this.doctorSelectValue, this.vouchersSelectValue, this.statuesSelectValue)
         .subscribe(data => {
           console.log(data)
           this.retrievePatient()
@@ -133,17 +163,17 @@ export class PatientComponent implements OnInit {
         }, error => console.log(error));
 
     } else if (this.saveButtonCheck == 'Update') {
-      // this.voucherService.update(this.voucherOrde.id, this.voucherOrde)
-      // .subscribe(
-      //   response => {
-      //     console.log(response)
-      //     this.retrievePatient()
-      //     this.createNotification('Success', 'Success', 'Pharmacy Updated Succesfully')
-      //     this.isVisible = false
-      //   },
-      //   error => {
-      //     console.log(error);
-      //   });
+      this.patientService.update(this.patient.id, this.patient)
+        .subscribe(
+          response => {
+            console.log(response)
+            this.retrievePatient()
+            this.createNotification('Success', 'Success', 'Patient Updated Succesfully')
+            this.isVisible = false
+          },
+          error => {
+            console.log(error);
+          });
     }
 
   }
@@ -163,6 +193,17 @@ export class PatientComponent implements OnInit {
         });
   }
 
+  retrieveNewEnrolmentPatient() {
+    this.patientService.getNewEnrolMentPationt('NewEnrolment')
+    .subscribe(
+      data => {
+        this.patientList = data;
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
   retrieveDoctor() {
     this.doctorService.getAll()
       .subscribe(
@@ -172,6 +213,20 @@ export class PatientComponent implements OnInit {
         error => {
           console.log(error);
         });
+  }
+
+  findById(id: number) {
+    this.patientService.getById(id).subscribe(
+      response => {
+        this.patient = response
+        this.doctorSelectValue = response.doctor.doctorName
+        this.projectSelectValue = response.projects[0].projectName
+
+      },
+      error => {
+        console.log(error);
+      });
+
   }
 
 
@@ -202,6 +257,51 @@ export class PatientComponent implements OnInit {
       .subscribe(
         data => {
           this.voucherDetailsList = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  getNames() {
+    this.patientService.getNames()
+      .subscribe(
+        data => {
+          this.options = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  getCodes() {
+    this.patientService.getCodes()
+      .subscribe(
+        data => {
+          this.options = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+
+  filterByCodes(code: string) {
+    this.patientService.filterByPatientCode(code)
+      .subscribe(
+        data => {
+          this.patientList = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  filterByName(code: string) {
+    this.patientService.filterByPatientName(code)
+      .subscribe(
+        data => {
+          this.patientList = data;
         },
         error => {
           console.log(error);

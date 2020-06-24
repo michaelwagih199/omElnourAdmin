@@ -25,6 +25,7 @@ import { VoucherDetailsComponent } from './pages/voucher-details/voucher-details
 import {DatePipe} from '@angular/common';
 import { MedicineComponent } from './pages/medicine/medicine.component';
 import { PatientDetailsComponent } from './pages/patient-details/patient-details.component';
+import { ProjectComponent } from './pages/project/project.component';
 
 registerLocaleData(en);
 
@@ -44,6 +45,7 @@ registerLocaleData(en);
     VoucherDetailsComponent,
     MedicineComponent,
     PatientDetailsComponent,
+    ProjectComponent,
 
   ],
 

@@ -19,8 +19,8 @@
       <div class="col-sm-2">
         <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Search Filters"
           [(ngModel)]="selectFilterSearchValue" (ngModelChange)="onSearchFilterChange($event)">
-          <nz-option nzLabel="DoctorCode" nzValue="DoctorCode"></nz-option>
-          <nz-option nzLabel="DoctorName" nzValue="DoctorName"></nz-option>
+          <nz-option nzLabel="Patient Code" nzValue="PatientCode"></nz-option>
+          <nz-option nzLabel="Patient Name" nzValue="PatientName"></nz-option>
         </nz-select>
       </div>
 
@@ -186,8 +186,9 @@
           <div class="col">
             <span>Select Project </span>
           </div>
+
           <div class="col ">
-            <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Project"
+            <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder={{projectSelectValue}}
               [(ngModel)]="projectSelectValue" name="projectName">
               <nz-option *ngFor="let item of projectList" nzValue="{{item.id}}" nzLabel="{{item.projectName}}">
               </nz-option>
