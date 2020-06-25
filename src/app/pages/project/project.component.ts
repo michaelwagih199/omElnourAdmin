@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Project } from 'src/app/services/models/Project';
+import { ProjectService } from 'src/app/services/data/project.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-project',
@@ -7,9 +10,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectComponent implements OnInit {
 
-  constructor() { }
+  projectList: Project[];
+
+  constructor(private projectService:ProjectService,) { }
 
   ngOnInit(): void {
+    this.retrieveProject()
   }
+
+
+  showModal(){
+
+  }
+
+  retrieveProject() {
+    this.projectService.getAll()
+      .subscribe(
+        data => {
+          this.projectList = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+
 
 }

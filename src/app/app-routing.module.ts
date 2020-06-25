@@ -11,6 +11,8 @@ import { VoucherDetailsComponent } from './pages/voucher-details/voucher-details
 import { MedicineComponent } from './pages/medicine/medicine.component';
 import { PatientDetailsComponent } from './pages/patient-details/patient-details.component';
 import { ProjectComponent } from './pages/project/project.component';
+import { UsersComponent } from './pages/users/users.component';
+import { AboutAppComponent } from './pages/about-app/about-app.component';
 
 
 const routes: Routes = [
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'pharmacies', component: PharmaciesComponent, canActivate:[AuthGaurdService]},
   { path: 'patients', component: PatientComponent, canActivate:[AuthGaurdService]},
   { path: 'project', component: ProjectComponent, canActivate:[AuthGaurdService]},
+  { path: 'users', component: UsersComponent, canActivate:[AuthGaurdService]},
+  { path: 'aboutApp', component: AboutAppComponent, canActivate:[AuthGaurdService]},
   { path: 'patients/newEnrollment', component: PatientComponent, canActivate:[AuthGaurdService]},
   { path: 'doctors', component: DoctorComponent, canActivate:[AuthGaurdService]},
   { path: 'voucher', component: VoucherComponent, canActivate:[AuthGaurdService]},

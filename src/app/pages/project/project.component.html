@@ -1,1 +1,35 @@
-<p>project works!</p>
+<div class="container">
+  <nz-card nzTitle="Project" [nzExtra]="extraTemplate">
+    <div>
+
+      <nz-table #basicTable [nzData]="projectList">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>Project Name</th>
+            <th>Medicine Name</th>
+            <th>Duration</th>
+            <th>allNumber</th>
+            <th>supportType</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{data.id}}</td>
+            <td>{{data.projectName}}</td>
+            <td>{{data.medicines[0].medicineName}}</td>
+            <td>{{data.medicines[0].medicineCycle.duration}}</td>
+            <td>{{data.medicines[0].medicineCycle.allNumber}}</td>
+            <td>{{data.medicines[0].medicineCycle.medicineSupport.supportType}}</td>
+          </tr>
+        </tbody>
+
+      </nz-table>
+    </div>
+
+  </nz-card>
+  <ng-template #extraTemplate>
+    <button nz-button nzType="primary" (click)="showModal()"><i nz-icon nzType="edit"></i>Edit Project</button>
+  </ng-template>
+</div>

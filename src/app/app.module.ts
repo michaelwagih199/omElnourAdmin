@@ -26,8 +26,9 @@ import {DatePipe} from '@angular/common';
 import { MedicineComponent } from './pages/medicine/medicine.component';
 import { PatientDetailsComponent } from './pages/patient-details/patient-details.component';
 import { ProjectComponent } from './pages/project/project.component';
+import { UsersComponent } from './pages/users/users.component';
+import { AboutAppComponent } from './pages/about-app/about-app.component';
 
-registerLocaleData(en);
 
 @NgModule({
 
@@ -46,6 +47,8 @@ registerLocaleData(en);
     MedicineComponent,
     PatientDetailsComponent,
     ProjectComponent,
+    UsersComponent,
+    AboutAppComponent,
 
   ],
 
