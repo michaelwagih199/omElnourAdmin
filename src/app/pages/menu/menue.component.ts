@@ -11,12 +11,22 @@ import { Router } from '@angular/router';
 export class MenueComponent implements OnInit {
   isCollapsed = false;
   isLoggedIn = false;
-  userName =  sessionStorage.getItem('username')
+  viewMenue = false
+  userName = sessionStorage.getItem('username')
+  public href: string = "";
 
-  constructor(private authService: AuthenticationService,private router: Router) { }
+
+  constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
-  this.isLoggedIn = this.authService.isUserLoggedIn();
+    this.isLoggedIn = this.authService.isUserLoggedIn();
+    this.href = this.router.url;
+    if (this.href == '/login' || this.href == ''  ) {
+      console.log(this.href)
+      this.viewMenue = false
+    }
+    else
+    this.viewMenue = true
   }
 
   log(): void {

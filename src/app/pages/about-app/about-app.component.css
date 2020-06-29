@@ -1,0 +1,9 @@
+.fill {
+  min-height: 99%;
+  height: 99%;
+}
+
+.rcorners2 {
+  border-radius: 10px;
+  border: 2px solid #FFD4C3;
+}

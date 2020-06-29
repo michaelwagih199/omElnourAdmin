@@ -28,6 +28,10 @@ import { PatientDetailsComponent } from './pages/patient-details/patient-details
 import { ProjectComponent } from './pages/project/project.component';
 import { UsersComponent } from './pages/users/users.component';
 import { AboutAppComponent } from './pages/about-app/about-app.component';
+import { PasswordPatternDirective } from './directives/password-pattern.directive';
+import { MatchPasswordDirective } from './directives/match-password.directive';
+import { ValidateUserNameDirective } from './directives/validate-user-name.directive';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -49,6 +53,9 @@ import { AboutAppComponent } from './pages/about-app/about-app.component';
     ProjectComponent,
     UsersComponent,
     AboutAppComponent,
+    PasswordPatternDirective,
+    MatchPasswordDirective,
+    ValidateUserNameDirective,
 
   ],
 
@@ -62,7 +69,8 @@ import { AboutAppComponent } from './pages/about-app/about-app.component';
     BrowserAnimationsModule,
     NzFormModule,
     ReactiveFormsModule,
-    NzListModule
+    NzListModule,
+    ChartsModule
 
   ],
 
