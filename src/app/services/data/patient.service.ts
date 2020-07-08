@@ -81,4 +81,9 @@ export class PatientService {
     return this.http.get(`${this.baseUrl}/names`);
   }
 
+  getUserPass(id):Observable<any> {
+    return this.http.get(`${this.baseUrl}/patientUserPass/${id}`);
+  }
+
+
 }

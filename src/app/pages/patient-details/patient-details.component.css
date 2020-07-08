@@ -22,3 +22,7 @@ hr {
 .border-3 {
   border-width:3px !important;
 }
+
+.selcect{
+  width: 200px;
+}

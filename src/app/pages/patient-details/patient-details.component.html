@@ -42,9 +42,29 @@
               <p class="text-info"> {{patient.patientInitial}} </p>
             </div>
           </div>
-
         </div>
       </nz-card>
+      <div class="text-center mt-2">
+
+        <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Patient Support"
+          [(ngModel)]="patientSupportValue" (ngModelChange)="onPatientSupportChange($event)">
+          <nz-option nzLabel="Send Code sms" nzValue="PatientCode"></nz-option>
+          <nz-option nzLabel="Send warning sms" nzValue="PatientWarning"></nz-option>
+        </nz-select>
+
+
+        <!-- warning model -->
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="Modal Title" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+          [nzOkLoading]="isOkLoading">
+          <div>
+            <div class="form-group">
+              <label for="name">Email1</label>
+              <input type="text" class="form-control" id="warningMessage" required [(ngModel)]="smsObject.messageText" name="warningMessage">
+            </div>
+          </div>
+        </nz-modal>
+
+      </div>
     </div>
     <div class="col-sm-9">
       <!-- profile Details -->
@@ -175,8 +195,7 @@
                 </h6>
               </div>
 
-
-              <div class="col rounded border border-secondary ml-1">
+              <div class="col rounded border border-secondary ml-1" style="background-color:#4B93C5;">
                 <nz-divider nzText="Patient Vouchers" nzOrientation="left"></nz-divider>
                 <nz-table #smallTable nzSize="small" [nzData]="patient.voucherDetails">
                   <thead>
@@ -189,7 +208,6 @@
                     <tr *ngFor="let data of smallTable.data">
                       <td>{{data.id}}</td>
                       <td>{{data.voucherCode}}</td>
-
                     </tr>
                   </tbody>
                 </nz-table>
@@ -199,20 +217,32 @@
             </div>
             <!--end row 1-->
             <div class="row mt-2 ml-1 mr-1">
+
               <div class="col ">
-                <div class="bg-success rounded">
-                  <h5 class="text-white text-center"> Patient Cycle </h5>
+                <div class="col ">
+                  <nz-divider nzText="Patient medicines" nzOrientation="center"></nz-divider>
+                  <nz-table #smallTable nzSize="small" [nzData]="patient.voucherDetails">
+                    <thead>
+                      <tr>
+                        <th>id</th>
+                        <th>Order Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of smallTable.data">
+                        <td>{{data.id}}</td>
+                        <td>{{data.voucherCode}}</td>
+                      </tr>
+                    </tbody>
+                  </nz-table>
+
                 </div>
-                <nz-card class="mt-1">
-                  <nz-steps [nzCurrent]="1">
-                    <nz-step nzTitle="Finished" nzDescription="This is a description."></nz-step>
-                    <nz-step nzTitle="In Progress" nzSubtitle="Left 00:00:08" nzDescription="This is a description.">
-                    </nz-step>
-                    <nz-step nzTitle="Waiting" nzDescription="This is a description."></nz-step>
-                  </nz-steps>
-                </nz-card>
+
               </div>
             </div>
+
+          </nz-tab>
+          <nz-tab nzTitle="Patient Cycle">
 
           </nz-tab>
         </nz-tabset>
