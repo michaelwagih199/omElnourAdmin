@@ -58,8 +58,9 @@
           [nzOkLoading]="isOkLoading">
           <div>
             <div class="form-group">
-              <label for="name">Email1</label>
-              <input type="text" class="form-control" id="warningMessage" required [(ngModel)]="smsObject.messageText" name="warningMessage">
+              <label for="name"> Warning Message </label>
+              <input type="text" class="form-control" id="warningMessage" required [(ngModel)]="smsObject.messageText"
+                name="warningMessage">
             </div>
           </div>
         </nz-modal>
@@ -211,39 +212,126 @@
                     </tr>
                   </tbody>
                 </nz-table>
-
               </div>
 
             </div>
             <!--end row 1-->
-            <div class="row mt-2 ml-1 mr-1">
-
+            <div class="row mt-2 ">
               <div class="col ">
                 <div class="col ">
                   <nz-divider nzText="Patient medicines" nzOrientation="center"></nz-divider>
-                  <nz-table #smallTable nzSize="small" [nzData]="patient.voucherDetails">
+                  <nz-table #medecineTable nzSize="small" [nzData]="patient.projects">
                     <thead>
                       <tr>
                         <th>id</th>
-                        <th>Order Date</th>
+                        <th>Name</th>
+                        <th>Duration </th>
+                        <th>Number Burches</th>
+                        <th>SupportType</th>
+                        <th>Suppport Description</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let data of smallTable.data">
-                        <td>{{data.id}}</td>
-                        <td>{{data.voucherCode}}</td>
+                      <tr *ngFor="let data of medecineTable.data">
+                        <td>{{data.medicines[0].id}}</td>
+                        <td>{{data.medicines[0].medicineName}}</td>
+                        <td>{{data.medicines[0].medicineCycle.durationBetWeenGift}}</td>
+                        <td>{{data.medicines[0].medicineCycle.numberMedecineBurches}}</td>
+                        <td>{{data.medicines[0].medicineCycle.medicineSupport.supportType}}</td>
+                        <td>{{data.medicines[0].medicineCycle.medicineSupport.suppportDescription}}</td>
                       </tr>
                     </tbody>
                   </nz-table>
-
                 </div>
-
               </div>
             </div>
 
           </nz-tab>
           <nz-tab nzTitle="Patient Cycle">
+            <div class="row">
+              <div class="col">
+                <nz-card nzType="inner" nzTitle="Patient Sycle Statues" [nzExtra]="extraTemplate">
+                  <nz-table #cycleTable nzSize="small" [nzData]="cycleListSize">
+                    <thead>
+                      <tr>
+                        <th>Complete Cycle </th>
+                        <th>Current Cycle </th>
+                        <th>Remaining Days</th>
+                        <th>Spent Days</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{completeCycle}}</td>
+                        <td>{{currentCycleStatuse}}</td>
+                        <td>{{currentCycleRemaining}}</td>
+                        <td>{{currentCycleSpent}}</td>
+                      </tr>
+                    </tbody>
+                  </nz-table>
+                </nz-card>
+                <ng-template #extraTemplate>
+                  <button nz-button nzType="primary" (click)="onActivePatient()">Active Patient</button>
+                </ng-template>
 
+                <!-- Active Patient model -->
+                <nz-modal [(nzVisible)]="patientActiveIsVisibale" nzTitle="Active patient"
+                  (nzOnCancel)="handleActivePatientCancel()" (nzOnOk)="handleActivePatientOk()"
+                  [nzOkLoading]="isActivePatientOkLoading">
+                  <div>
+                    <div class="form-group">
+                      <label for="name"> Start CycleDate </label>
+                      <nz-date-picker [(ngModel)]="slectBirthDate" name="slectBirthDate" [nzFormat]="dateFormat">
+                      </nz-date-picker>
+                    </div>
+                  </div>
+                </nz-modal>
+              </div>
+            </div>
+
+            <div class=" mt-3">
+              <nz-card nzType="inner" nzTitle="Patient Activities" [nzExtra]="extraTemplate">
+                <div >
+                  <nz-collapse>
+                    <nz-collapse-panel [nzHeader]='"Patient Plan"' [nzActive]="false" [nzDisabled]="false">
+                      <div>patient paln</div>
+                    </nz-collapse-panel>
+                  </nz-collapse>
+                </div>
+
+                <div class="mt-1">
+                  <nz-collapse>
+                    <nz-collapse-panel [nzHeader]='"Patient TimeLine"' [nzActive]="false" [nzDisabled]="false">
+                      <div>
+                        <nz-table #timelineTable nzSize="small" [nzData]="timelineList">
+                          <thead>
+                            <tr>
+                              <th>Id </th>
+                              <th> Event Date </th>
+                              <th>Event Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let data of timelineTable.data">
+                              <td>{{data.id}}</td>
+                              <td>{{data.createdDate}}</td>
+                              <td>{{data.description}}</td>
+                            </tr>
+                          </tbody>
+                        </nz-table>
+                      </div>
+                    </nz-collapse-panel>
+                  </nz-collapse>
+                </div>
+
+              </nz-card>
+              <ng-template #extraTemplate>
+                <button nz-button nzType="primary" (click)="onActivePatient()">Active Patient</button>
+              </ng-template>
+
+
+
+            </div>
           </nz-tab>
         </nz-tabset>
       </nz-card>

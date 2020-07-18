@@ -23,7 +23,6 @@ export class Patient {
   patientStatues: PatientStatues;
 
 }
-
 export interface Doctor {
   id: number;
   doctorCode: string;
@@ -34,10 +33,35 @@ export interface Doctor {
   doctorName: string;
 }
 
+
 export interface Project {
   id: number;
   projectName: string;
+  projectCycleDuration: number;
+  projectCycleSlicing: number;
+  medicines: Medicine[];
 }
+
+export interface Medicine {
+  id: number;
+  medicineName: string;
+  medicineCycle: MedicineCycle;
+}
+
+export interface MedicineCycle {
+  id: number;
+  durationBetWeenGift: number;
+  numberMedecineBurches: number;
+  medicineSupport: MedicineSupport;
+}
+
+export interface MedicineSupport {
+  id: number;
+  supportType: string;
+  suppportDescription: string;
+}
+
+
 
 export interface VoucherDetail {
   id: number;
