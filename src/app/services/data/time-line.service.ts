@@ -10,8 +10,8 @@ export class TimeLineService {
 
   constructor(private http: HttpClient) { }
 
-  getAll():Observable<any> {
-    return this.http.get(`${this.baseUrl}`);
+  getByPatientId(patintnId: number):Observable<any> {
+    return this.http.get(`${this.baseUrl}/nodeByCycleId/${patintnId}`);
   }
 
 }

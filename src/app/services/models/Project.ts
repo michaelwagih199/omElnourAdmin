@@ -1,24 +1,28 @@
 export class Project {
   id: number;
   projectName: string;
+  projectCycleDuration:number
+  projectCycleSlicing:number
   medicines: Medicine[];
 }
 
-export interface Medicine {
+export class Medicine {
   id: number;
   medicineName: string;
   medicineCycle: MedicineCycle;
 }
 
-export interface MedicineCycle {
+export class MedicineCycle {
   id: number;
-  duration: number;
-  allNumber: number;
+  durationBetWeenGift: number;
+  numberMedecineBurches: number;
   medicineSupport: MedicineSupport;
 }
 
-export interface MedicineSupport {
+export class MedicineSupport {
   id: number;
   supportType: string;
+  suppportDescription: string;
+
 }
 

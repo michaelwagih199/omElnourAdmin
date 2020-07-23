@@ -1,79 +1,101 @@
 import { Component, OnInit } from '@angular/core';
-import { Project } from 'src/app/services/models/Project';
+import { Project, Medicine, MedicineCycle, MedicineSupport } from 'src/app/services/models/Project';
 import { ProjectService } from 'src/app/services/data/project.service';
-import { User } from 'src/app/services/models/user';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CustomvalidationService } from 'src/app/services/customvalidation.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
+
 export class ProjectComponent implements OnInit {
 
-  projectList: Project[];
+  projectList: Project[] = [];
   isVisible = false;
-  userModal = new User();
   project = new Project();
+  selectProjectCycleDuration: any
+
+  validateForm!: FormGroup;
+
+  monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  projectId: number;
 
   constructor(private projectService: ProjectService,
-    private fb: FormBuilder,
-    private customValidator: CustomvalidationService) { }
-
-
-
-  onEdit(id) {
-    this.isVisible = true;
-  }
-
-
-  handleCancel() {
-    this.isVisible = false;
-
-  }
-  registerForm: FormGroup;
-  submitted = false;
+    private fb: FormBuilder) { }
 
 
   ngOnInit() {
-    this.retrieveProject()
-    this.registerForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      username: ['', [Validators.required], this.customValidator.userNameValidator.bind(this.customValidator)],
-      password: ['', Validators.compose([Validators.required, this.customValidator.patternValidator()])],
-      confirmPassword: ['', [Validators.required]],
-    },
-      {
-        validator: this.customValidator.MatchPassword('password', 'confirmPassword'),
-      }
-    );
+    this.retrieveProject();
+    this.validForm();
   }
+  /**
+   * events
+   */
 
-  get registerFormControl() {
-    return this.registerForm.controls;
-  }
-
-  onSubmit() {
-    this.submitted = true;
-    if (this.registerForm.valid) {
-      alert('Form Submitted succesfully!!!\n Check the values in browser console.');
-      console.table(this.registerForm.value);
+  submitForm(): void {
+    for (const i in this.validateForm.controls) {
+      this.validateForm.controls[i].markAsDirty();
+      this.validateForm.controls[i].updateValueAndValidity();
     }
+    // this.saveProject()
+    console.log(this.validateForm.controls['projectName'].value)
+
   }
 
+  validForm() {
+    this.validateForm = this.fb.group({
+      projectName: [null, [Validators.required]],
+      ProjectCycleDuration: [null, [Validators.required]],
+      projectCycleSlicing: [null, [Validators.required]],
+      medicineName: [null, [Validators.required]],
+      durationBetWeenGift: [null, [Validators.required]],
+      medecineBurches: [null, [Validators.required]],
+      supportType: [null, [Validators.required]],
+      suppportDescription: [null, [Validators.required]]
+    });
+  }
+
+  handleCancel() {
+    this.isVisible = false;
+    this.project = new Project()
+  }
+
+  onEdit(id: number) {
+    this.isVisible = true
+    this.projectId = id
+  }
+
+
+  /**
+   * data
+   */
   retrieveProject() {
     this.projectService.getAll()
       .subscribe(
         data => {
-          this.projectList = data;
+          this.projectList.push(data);
+          this.project = data;
+          console.log(data);
         },
         error => {
           console.log(error);
         });
   }
 
+
+  saveProject() {
+    this.project.projectName = this.validateForm.controls['projectName'].value
+    this.projectService.update(this.projectId, this.project)
+      .subscribe(
+        data => {
+          console.log(data)
+        },
+        error => {
+          console.log(error);
+        });
+
+  }
 
 
 }

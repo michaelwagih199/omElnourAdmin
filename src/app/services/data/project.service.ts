@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ProjectService {
 
-  private baseUrl = 'http://localhost:8080/projects'
+  private baseUrl = 'http://localhost:8080/api/projects'
 
   constructor(private http: HttpClient) { }
 
@@ -15,19 +15,9 @@ export class ProjectService {
     return this.http.get(`${this.baseUrl}`);
   }
 
-  getDoctorById (id:number):Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
-  }
-
-  createDoctor(doctor: Object): Observable<Object>  {
-    return this.http.post( `${this.baseUrl}` , doctor);
-  }
 
   update(id, doctor: any): Observable <Object> {
-    return this.http.put(`${this.baseUrl}/${id}`, doctor);
+    return this.http.put(`${this.baseUrl}/UpdateProject/${id}`, doctor);
   }
 
-  delete(id):Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
-  }
 }

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class PatientService {
 
   private baseUrl = 'http://localhost:8080/patients'
-  private projectUrl = 'http://localhost:8080/projects'
+  private projectUrl = 'http://localhost:8080/api/projects'
   private statuesUrl = 'http://localhost:8080/patientStatues'
   private voucherDetails = 'http://localhost:8080/voucherDetails'
 

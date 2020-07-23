@@ -92,6 +92,11 @@
       <button nz-button nzType="primary">Register</button>
     </nz-form-control>
   </nz-form-item>
+
+  <nz-form-control>
+    <button nz-button nzType="primary" [disabled]="!validateForm.valid">Log in</button>
+  </nz-form-control>
+
 </form>
 <br>
 <br>

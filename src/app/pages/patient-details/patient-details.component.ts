@@ -10,6 +10,9 @@ import { PatientCycleService } from 'src/app/services/data/patient-cycle.service
 import { DatePipe } from '@angular/common';
 import { PatientCycle } from 'src/app/services/models/PatientCycle';
 import { PatientTimeLine } from 'src/app/services/models/patientTimeLine';
+import { TimeLineService } from 'src/app/services/data/time-line.service';
+import { PatientPlanService } from 'src/app/services/data/patient-plan.service';
+import { PatientPlan } from 'src/app/services/models/patientPlan';
 @Component({
   selector: 'app-patient-details',
   templateUrl: './patient-details.component.html',
@@ -20,17 +23,20 @@ export class PatientDetailsComponent implements OnInit {
   private routeSub: Subscription;
   patient: Patient = new Patient()
   patientCycle: PatientCycle = new PatientCycle()
+  patientCycleList: PatientCycle[] = []
   patientList: Patient[] = [];
   medecineList: Medicine[] = []
   voucherDetailsList: VoucherDetail[] = [];
+  patientPlanList: PatientPlan[] = [];
   userPassList = []
   completeCycle = 0;
   currentCycleStatuse: any
   currentCycleRemaining: any
+  selectPatientCycleValue: any
   currentCycleSpent: any
   cycleListSize = [2]
-
-  timelineList:PatientTimeLine[]=[]
+  PatientTimeLineValue: any
+  timelineList: PatientTimeLine[] = []
 
   index1 = 0;
   index2 = 0;
@@ -56,11 +62,13 @@ export class PatientDetailsComponent implements OnInit {
     private patientService: PatientService,
     private smsService: SmsService,
     private patientCycleService: PatientCycleService,
+    private patientTimeLineService: TimeLineService,
     private router: Router,
     private route: ActivatedRoute,
     private modal: NzModalService,
     private datePipe: DatePipe,
-    private notification: NzNotificationService
+    private notification: NzNotificationService,
+    private patientPlanService: PatientPlanService
   ) { }
 
   ngOnInit(): void {
@@ -84,7 +92,6 @@ export class PatientDetailsComponent implements OnInit {
   }
 
   getUserPass(id: number) {
-
     this.patientService.getUserPass(id).subscribe(
       response => {
         this.patientUserName = response[0]
@@ -107,6 +114,7 @@ export class PatientDetailsComponent implements OnInit {
     this.countCompleteCycle(this.patientId)
     this.countCurrentCycle(this.patientId)
     this.getSpentAndRemaining(this.patientId)
+    this.getPatientCycle(this.patientId)
   }
 
 
@@ -144,6 +152,51 @@ export class PatientDetailsComponent implements OnInit {
       });
   }
 
+  getPatientTimeLint(patientId: number) {
+    if (patientId != null) {
+      this.patientTimeLineService.getByPatientId(patientId).subscribe(
+        response => {
+          this.timelineList.push(response)
+          console.log(response)
+        },
+        error => {
+          console.log(error);
+        });
+    }
+  }
+
+  getPatientCycle(patientId: number) {
+    this.patientCycleService.getListPatientCycleByPIBind(patientId).subscribe(
+      response => {
+        this.patientCycleList.push(response)
+        console.log(response)
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  getPatientPlanByIdBind(value: number) {
+    this.patientPlanService.getPatientPlanByIdBind(value).subscribe(
+      response => {
+        this.patientPlanList.push(response)
+        console.log(response)
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  createPatientPlanNode(value: number) {
+    this.patientPlanService.createPatientPlanNode(value).subscribe(
+      response => {
+        console.log(response)
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
 
   /**
    * events
@@ -173,18 +226,18 @@ export class PatientDetailsComponent implements OnInit {
     const selectedDate: string = this.datePipe.transform(this.slectBirthDate, "yyyy-MM-dd").toString()
     this.patientCycle.startCycleDate = selectedDate
     this.patientCycle.isComplete = 1;
-    this.patientCycleService.createPatientCycle(this.patientId,this.patientCycle)
-    .subscribe(data => {
-      console.log(data)
-    }, error => console.log(error));
+    this.patientCycleService.createPatientCycle(this.patientId, this.patientCycle)
+      .subscribe(data => {
+        console.log(data)
+      }, error => console.log(error));
     // active patient
 
   }
 
-  activePatientStatus(){
-    this.patientCycleService.activePation(this.patientId).subscribe(data =>{
+  activePatientStatus() {
+    this.patientCycleService.activePation(this.patientId).subscribe(data => {
       console.log(data)
-    },error=>console.log(error))
+    }, error => console.log(error))
   }
 
   sendSms(messageContnt) {
@@ -282,6 +335,20 @@ export class PatientDetailsComponent implements OnInit {
       title,
       description
     );
+  }
+
+
+  onPatientCycleChange(value: number) {
+    console.log(value)
+    this.timelineList = []
+    this.patientPlanList = []
+    this.createPatientPlanNode(value)
+    this.getPatientTimeLint(value)
+    this.getPatientPlanByIdBind(value)
+  }
+
+  onPatientTimeLineChange(value: any) {
+    console.log(value)
   }
 
 

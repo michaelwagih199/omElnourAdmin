@@ -2,15 +2,13 @@
   <nz-card nzTitle="Project" [nzExtra]="extraTemplate">
     <div>
 
-      <nz-table #basicTable [nzData]="projectList">
+      <nz-table #basicTable [nzData]="projectList[0]" nzSize="small">
         <thead>
           <tr>
             <th>id</th>
             <th>Project Name</th>
-            <th>Medicine Name</th>
             <th>Project Duration</th>
-            <th>Project Project</th>
-            <th>supportType</th>
+            <th>Number Of Gifts</th>
           </tr>
         </thead>
 
@@ -18,10 +16,8 @@
           <tr *ngFor="let data of basicTable.data">
             <td>{{data.id}}</td>
             <td>{{data.projectName}}</td>
-            <td>{{data.medicines[0].medicineName}}</td>
-            <td>{{data.medicines[0].medicineCycle.duration}}</td>
-            <td>{{data.medicines[0].medicineCycle.allNumber}}</td>
-            <td>{{data.medicines[0].medicineCycle.medicineSupport.supportType}}</td>
+            <td>{{data.projectCycleDuration}}</td>
+            <td>{{data.projectCycleSlicing}}</td>
             <td>
               <nz-divider nzType="vertical"></nz-divider>
               <a class="btn text-primary" (click)="onEdit(data.id)">
@@ -37,91 +33,136 @@
   <ng-template #extraTemplate>
   </ng-template>
 
-  <!--add project -->
-
+  <!-- edite project -->
   <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
     (nzOnCancel)="handleCancel()">
-
-    <ng-template #modalTitle>
-      EditeProject
-    </ng-template>
-
+    <ng-template #modalTitle> EditeProject</ng-template>
     <ng-template #modalContent>
       <div>
-        <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" formControlName="name">
-            <span class="text-danger"
-              *ngIf="(registerFormControl.name.touched || submitted) && registerFormControl.name.errors?.required">
-              Name is required
-            </span>
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="text" class="form-control" formControlName="email">
-            <span class="text-danger"
-              *ngIf="(registerFormControl.email.touched || submitted) && registerFormControl.email.errors?.required">
-              Email is required
-            </span>
-            <span class="text-danger"
-              *ngIf="registerFormControl.email.touched && registerFormControl.email.errors?.email">
-              Enter a valid email address
-            </span>
-          </div>
-          <div class="form-group">
-            <label>User Name</label>
-            <input type="text" class="form-control" formControlName="username">
-            <span class="text-danger"
-              *ngIf="(registerFormControl.username.touched || submitted) && registerFormControl.username.errors?.required">
-              User Name is required
-            </span>
-            <span class="text-danger"
-              *ngIf="registerFormControl.username.touched && registerFormControl.username.errors?.userNameNotAvailable">
-              User Name is not available
-            </span>
-          </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" formControlName="password">
-            <span class="text-danger"
-              *ngIf="(registerFormControl.password.touched || submitted) && registerFormControl.password.errors?.required">
-              Password is required
-            </span>
-            <span class="text-danger"
-              *ngIf="registerFormControl.password.touched && registerFormControl.password.errors?.invalidPassword">
-              Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase
-              letter and 1 number
-            </span>
-          </div>
-          <div class="form-group">
-            <label>Confirm Password</label>
-            <input type="password" class="form-control" formControlName="confirmPassword">
-            <span class="text-danger"
-              *ngIf="(registerFormControl.confirmPassword.touched || submitted)&& registerFormControl.confirmPassword.errors?.required">
-              Confirm Password is required
-            </span>
-            <span class="text-danger"
-              *ngIf="registerFormControl.confirmPassword.touched && registerFormControl.confirmPassword.errors?.passwordMismatch">
-              Passwords doesnot match
-            </span>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-success">Register</button>
-          </div>
+
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your projectName!">
+              <nz-form-label nzRequired>Project Name</nz-form-label>
+              <nz-input-group>
+                <input type="text" nz-input formControlName="projectName" placeholder="{{project.projectName}}" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please Select ProjectCycle Duration!">
+              <nz-form-label nzRequired>Patient Duration</nz-form-label>
+              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Patient Duration"
+                formControlName="ProjectCycleDuration">
+                <nz-option *ngFor="let item of monthList" nzValue="{{item}}" nzLabel="{{item}}:Month">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please Select Number Of Gifts!">
+              <nz-form-label nzRequired>Number Of Gifts</nz-form-label>
+              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Number Of Gifts"
+                formControlName="projectCycleSlicing">
+                <nz-option *ngFor="let item of monthList" nzValue="{{item}}" nzLabel="{{item}}:times">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your medicineName!">
+              <nz-form-label nzRequired>Medicine Name</nz-form-label>
+              <nz-input-group>
+                <input type="text" nz-input formControlName="medicineName" placeholder="medicineName" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please Select Gifts Slicing!">
+              <nz-form-label nzRequired>Gifts Slicing</nz-form-label>
+              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Gifts Slicing"
+                formControlName="durationBetWeenGift">
+                <nz-option *ngFor="let item of monthList" nzValue="{{item}}" nzLabel="{{item}}:Month">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please Select Medecine Burches!">
+              <nz-form-label nzRequired>Medecine Burches</nz-form-label>
+              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Medecine Burches"
+                formControlName="medecineBurches">
+                <nz-option *ngFor="let item of monthList" nzValue="{{item}}" nzLabel="{{item}}:times">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your Support Type!">
+              <nz-form-label nzRequired>Support Type</nz-form-label>
+              <nz-input-group>
+                <input type="text" nz-input formControlName="supportType" placeholder="supportType" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your Suppport Description!">
+              <nz-form-label nzRequired>Suppport Description</nz-form-label>
+              <nz-input-group>
+                <input type="text" nz-input formControlName="suppportDescription" placeholder="suppportDescription" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <hr>
+          <button nz-button [nzType]="'primary'" [disabled]="!validateForm.valid" >Save</button>
+
         </form>
       </div>
-
     </ng-template>
-
     <ng-template #modalFooter>
-
     </ng-template>
-
-
   </nz-modal>
 
 
+
+  <div class="mt-2">
+    <nz-card nzTitle="Project Medicine" [nzExtra]="extraTemplate">
+      <nz-table #mediecineTable [nzData]="projectList[0]" nzSize="small">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>Medicine Name</th>
+            <th>Gifts Slicing</th>
+            <th>MedecineBurches</th>
+            <th>Support Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of mediecineTable.data">
+            <td>{{data.medicines[0].id}}</td>
+            <td>{{data.medicines[0].medicineName}}</td>
+            <td>{{data.medicines[0].medicineCycle.durationBetWeenGift}}</td>
+            <td>{{data.medicines[0].medicineCycle.numberMedecineBurches}}</td>
+            <td>{{data.medicines[0].medicineCycle.medicineSupport.supportType}}</td>
+            <td>{{data.medicines[0].medicineCycle.medicineSupport.suppportDescription}}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+    <ng-template #extraTemplate>
+    </ng-template>
+  </div>
+  <!--add project -->
   <!-- end add doctor -->
 
 </div>
