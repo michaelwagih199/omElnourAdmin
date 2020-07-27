@@ -20,7 +20,7 @@ export class AuthenticationService {
   ) {
   }
   authenticate(userName, password) {
-    return this.httpClient.post<any>('http://localhost:8080/authenticateAPI', { userName, password }).pipe(
+    return this.httpClient.post<any>('http://localhost:8080/api/auth/authenticateAPI', { userName, password }).pipe(
       map(
         userData => {
           if (userData.token != null) {

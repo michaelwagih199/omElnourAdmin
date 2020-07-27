@@ -5,3 +5,14 @@
 .selcect{
   width: 150px;
 }
+
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000;
+  border-radius: 8px;
+}

@@ -46,15 +46,15 @@
             <nz-form-control nzErrorTip="Please input your projectName!">
               <nz-form-label nzRequired>Project Name</nz-form-label>
               <nz-input-group>
-                <input type="text" nz-input formControlName="projectName" placeholder="{{project.projectName}}" />
+                <input type="text" nz-input formControlName="projectName" [(ngModel)]="project.projectName" placeholder="projectName" />
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
 
           <nz-form-item>
             <nz-form-control nzErrorTip="Please Select ProjectCycle Duration!">
-              <nz-form-label nzRequired>Patient Duration</nz-form-label>
-              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Patient Duration"
+              <nz-form-label nzRequired>ProjectCycle Duration</nz-form-label>
+              <nz-select class="selcect" nzShowSearch nzAllowClear  nzPlaceHolder="{{project.projectCycleDuration}}"
                 formControlName="ProjectCycleDuration">
                 <nz-option *ngFor="let item of monthList" nzValue="{{item}}" nzLabel="{{item}}:Month">
                 </nz-option>
@@ -65,7 +65,7 @@
           <nz-form-item>
             <nz-form-control nzErrorTip="Please Select Number Of Gifts!">
               <nz-form-label nzRequired>Number Of Gifts</nz-form-label>
-              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Number Of Gifts"
+              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="{{project.projectCycleSlicing}}"
                 formControlName="projectCycleSlicing">
                 <nz-option *ngFor="let item of monthList" nzValue="{{item}}" nzLabel="{{item}}:times">
                 </nz-option>
@@ -78,7 +78,7 @@
             <nz-form-control nzErrorTip="Please input your medicineName!">
               <nz-form-label nzRequired>Medicine Name</nz-form-label>
               <nz-input-group>
-                <input type="text" nz-input formControlName="medicineName" placeholder="medicineName" />
+                <input type="text" nz-input formControlName="medicineName" [(ngModel)]="project.medicines[0].medicineName" placeholder="medicineName" />
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
@@ -86,7 +86,7 @@
           <nz-form-item>
             <nz-form-control nzErrorTip="Please Select Gifts Slicing!">
               <nz-form-label nzRequired>Gifts Slicing</nz-form-label>
-              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Gifts Slicing"
+              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="{{project.medicines[0].medicineCycle.durationBetWeenGift}}"
                 formControlName="durationBetWeenGift">
                 <nz-option *ngFor="let item of monthList" nzValue="{{item}}" nzLabel="{{item}}:Month">
                 </nz-option>
@@ -97,7 +97,7 @@
           <nz-form-item>
             <nz-form-control nzErrorTip="Please Select Medecine Burches!">
               <nz-form-label nzRequired>Medecine Burches</nz-form-label>
-              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="Medecine Burches"
+              <nz-select class="selcect" nzShowSearch nzAllowClear nzPlaceHolder="{{project.medicines[0].medicineCycle.numberMedecineBurches}}"
                 formControlName="medecineBurches">
                 <nz-option *ngFor="let item of monthList" nzValue="{{item}}" nzLabel="{{item}}:times">
                 </nz-option>
@@ -109,7 +109,7 @@
             <nz-form-control nzErrorTip="Please input your Support Type!">
               <nz-form-label nzRequired>Support Type</nz-form-label>
               <nz-input-group>
-                <input type="text" nz-input formControlName="supportType" placeholder="supportType" />
+                <input type="text" nz-input formControlName="supportType" [(ngModel)]="project.medicines[0].medicineCycle.medicineSupport.supportType" placeholder="supportType" />
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
@@ -118,12 +118,12 @@
             <nz-form-control nzErrorTip="Please input your Suppport Description!">
               <nz-form-label nzRequired>Suppport Description</nz-form-label>
               <nz-input-group>
-                <input type="text" nz-input formControlName="suppportDescription" placeholder="suppportDescription" />
+                <input type="text" nz-input formControlName="suppportDescription" [(ngModel)]="project.medicines[0].medicineCycle.medicineSupport.suppportDescription"  placeholder="Suppport Description" />
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
           <hr>
-          <button nz-button [nzType]="'primary'" [disabled]="!validateForm.valid" >Save</button>
+          <button nz-button [nzType]="'primary'" [disabled]="!validateForm.valid">Save</button>
 
         </form>
       </div>

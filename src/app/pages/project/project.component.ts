@@ -38,7 +38,7 @@ export class ProjectComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    // this.saveProject()
+    this.saveProject()
     console.log(this.validateForm.controls['projectName'].value)
 
   }
@@ -58,12 +58,13 @@ export class ProjectComponent implements OnInit {
 
   handleCancel() {
     this.isVisible = false;
-    this.project = new Project()
+
   }
 
   onEdit(id: number) {
     this.isVisible = true
     this.projectId = id
+    this.retrieveProject()
   }
 
 
@@ -71,11 +72,12 @@ export class ProjectComponent implements OnInit {
    * data
    */
   retrieveProject() {
+    this.projectList=[]
     this.projectService.getAll()
       .subscribe(
         data => {
           this.projectList.push(data);
-          this.project = data;
+          this.project = data[0];
           console.log(data);
         },
         error => {
@@ -86,14 +88,26 @@ export class ProjectComponent implements OnInit {
 
   saveProject() {
     this.project.projectName = this.validateForm.controls['projectName'].value
+    this.project.projectCycleDuration = this.validateForm.controls['ProjectCycleDuration'].value
+    this.project.projectCycleSlicing = this.validateForm.controls['projectCycleSlicing'].value
+    this.project.medicines[0].medicineName = this.validateForm.controls['medicineName'].value
+    this.project.medicines[0].medicineCycle.durationBetWeenGift = this.validateForm.controls['durationBetWeenGift'].value
+    this.project.medicines[0].medicineCycle.numberMedecineBurches = this.validateForm.controls['medecineBurches'].value
+    this.project.medicines[0].medicineCycle.medicineSupport.supportType = this.validateForm.controls['supportType'].value
+    this.project.medicines[0].medicineCycle.medicineSupport.suppportDescription = this.validateForm.controls['suppportDescription'].value
+
     this.projectService.update(this.projectId, this.project)
       .subscribe(
         data => {
           console.log(data)
+
         },
         error => {
           console.log(error);
         });
+
+    this.handleCancel()
+    this.retrieveProject()
 
   }
 
