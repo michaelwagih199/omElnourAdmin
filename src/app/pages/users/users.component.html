@@ -1,1 +1,118 @@
+<div class="container">
 
+  <nz-card>
+    <nz-tabset>
+      <nz-tab nzTitle="User Details">
+        <nz-card nzType="inner" nzTitle="" [nzExtra]="userTemplate">
+          <div>
+            <nz-table #basicTable [nzData]="userList">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>User name</th>
+                  <th>User Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of basicTable.data">
+
+                  <td>{{data.id}}</td>
+                  <td>{{data.userName}}</td>
+                  <td>{{data.roles[0].roleName}}</td>
+
+                  <td>
+                    <a class="btn text-danger" (click)="onDelete(data.id)">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  </td>
+
+                  <td>
+                    <a class="btn text-primary" (click)="onEdit(data.id)">
+                      <i class="fas fa-user-edit"></i></a>
+                  </td>
+
+                  <td>
+                    <a class="btn text-warning" (click)="onInfo(data.id)">
+                      <i class="fas fa-info-circle"></i></a>
+                  </td>
+
+                </tr>
+              </tbody>
+            </nz-table>
+
+          </div>
+        </nz-card>
+      </nz-tab>
+
+      <nz-tab nzTitle="Roles">
+        <nz-card nzType="inner" nzTitle="" [nzExtra]="rolesTemplate">
+          <div>
+            <nz-table #roleTable [nzData]="rolesList">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Role Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of roleTable.data">
+                  <td>{{data.id}}</td>
+                  <td>{{data.roleName}}</td>
+                  <td>
+                    <a data-toggle="tooltip" title="Delete Role!" class="btn text-danger" (click)="onRolesDelete(data.id)">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  </td>
+
+                  <td>
+                    <a data-toggle="tooltip" title="Role Permission!" class="btn text-warning" (click)="onRolesInfo(data.id)" >
+                      <i class="fas fa-info-circle"></i></a>
+                  </td>
+
+                </tr>
+              </tbody>
+            </nz-table>
+
+          </div>
+        </nz-card>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+
+
+  <ng-template #userTemplate>
+    <button nz-button nzType="primary" (click)="showUserModal()"><i nz-icon nzType="user-add"></i>Add User</button>
+  </ng-template>
+
+  <ng-template #rolesTemplate>
+    <button nz-button nzType="primary" (click)="showRoleModal()"><i nz-icon nzType="user-add"></i>Add Roles</button>
+  </ng-template>
+
+
+  <!--add user -->
+  <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="handleCancel()">
+    <ng-template #modalTitle> EditeProject</ng-template>
+    <ng-template #modalContent>
+      <div>
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your projectName!">
+              <nz-form-label nzRequired>User Name</nz-form-label>
+              <nz-input-group>
+                <input type="text" nz-input formControlName="userName" [(ngModel)]="user.userName"
+                  placeholder="projectName" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <hr>
+          <button nz-button [nzType]="'primary'" [disabled]="!validateForm.valid">Save</button>
+        </form>
+      </div>
+    </ng-template>
+    <ng-template #modalFooter>
+    </ng-template>
+  </nz-modal>
+  <!-- end add user -->
+  
+</div>

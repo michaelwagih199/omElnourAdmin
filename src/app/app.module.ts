@@ -17,7 +17,6 @@ import { PharmaciesComponent } from './pages/pharmacies/pharmacies.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { PatientComponent } from './pages/allPatient/patient.component';
 import { GovernorateServiceService } from './services/data/governorate-service.service';
-import { AuthInterceptor } from './services/AuthInterceptor.service';
 import { PharmacyService } from './services/data/pharmacy.service';
 import { DoctorComponent } from './pages/doctor/doctor.component';
 import { VoucherComponent } from './pages/voucher/voucher.component';
@@ -28,9 +27,6 @@ import { PatientDetailsComponent } from './pages/patient-details/patient-details
 import { ProjectComponent } from './pages/project/project.component';
 import { UsersComponent } from './pages/users/users.component';
 import { AboutAppComponent } from './pages/about-app/about-app.component';
-import { PasswordPatternDirective } from './directives/password-pattern.directive';
-import { MatchPasswordDirective } from './directives/match-password.directive';
-import { ValidateUserNameDirective } from './directives/validate-user-name.directive';
 import { ChartsModule } from 'ng2-charts';
 
 
@@ -53,14 +49,9 @@ import { ChartsModule } from 'ng2-charts';
     ProjectComponent,
     UsersComponent,
     AboutAppComponent,
-    PasswordPatternDirective,
-    MatchPasswordDirective,
-    ValidateUserNameDirective,
-
   ],
 
   imports: [
-
     BrowserModule,
     AppRoutingModule,
     NgZorroAntdModule,
@@ -75,11 +66,6 @@ import { ChartsModule } from 'ng2-charts';
   ],
 
   providers: [{ provide: NZ_I18N, useValue: en_US }, GovernorateServiceService,
-    {
-      provide : HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi   : true,
-    },
     PharmacyService,
     DatePipe
   ],
